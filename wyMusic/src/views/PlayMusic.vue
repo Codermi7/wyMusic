@@ -6,7 +6,7 @@
     <Record :img='img' @click="change" :isStop='isStop'></Record>
 
     <Lyric :lyric='lyric' :title='title' :currentTime='currentTime'></Lyric>
-    <audio :src="music" controls="controls" ref='audio'></audio>
+    <audio :src="music"  ref='audio'></audio>
     <play-bar @stop="change" @prev='prevFn' @next="nextFn" :isStop='isStop'></play-bar>
   </div>
 </template>
@@ -35,14 +35,6 @@ export default {
   },
   created() {
     this.getMusicInfo(569200213);
-    this.$nextTick(()=>{
-      setTimeout(()=>{
-        this.isStop = !this.isStop
-        this.change(this.isStop)
-        console.log(this.isStop)
-      },1000)
-    })
-
   },
   mounted() {
 
@@ -60,6 +52,7 @@ export default {
               this.bg = data.playlist.creator.backgroundUrl;
               this.img = data.playlist.creator.avatarUrl;
           }
+          else return
       })
         getSongUrl(id).then(data=> {
             console.log(data.data[0].url)
@@ -73,10 +66,12 @@ export default {
     prevFn(){
       this.idIndex = (this.idIndex - 1) < 0 ? this.idList.length-1 : this.idIndex - 1;
       this.getMusicInfo(this.idList[this.idIndex]);
+      this.isStop = true
     },
     nextFn(){
       this.idIndex = (this.idIndex + 1) >= this.idList.length ? 0 : this.idIndex + 1;
       this.getMusicInfo(this.idList[this.idIndex]);
+      this.isStop = true
     },
     change(state){
       this.isStop = state;
@@ -94,8 +89,20 @@ export default {
         this.currentTime = this.$refs.audio.currentTime;
         if(this.currentTime>=this.duration){
           this.nextFn()
+          this.timer = null
         }
       }, 10);
+    }
+  },
+  watch: {
+    'music':function () {
+      console.log('切换')
+      this.$nextTick(()=>{
+        this.isStop = !this.isStop
+        this.change(this.isStop)
+      })
+
+
     }
   }
 };

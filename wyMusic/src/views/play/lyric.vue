@@ -32,10 +32,13 @@ export default {
     lyricAry() {
       let str = this.lyric;
       //   console.log(str);
+      // console.log(str.match(/:/g).length)
       let ary = [];
       str.replace(/\[(\d+):(\d+)\.(\d+)\] *([^\n]+)/g, function(a, b, c, d,e) {
-        // console.log(b, c);
-        ary.push([b * 60 + c * 1 + d/1000, e]);
+
+          console.log(e)
+          ary.push([b * 60 + c * 1 + d/1000, e]);
+
       });
       return ary;
     },
