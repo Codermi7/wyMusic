@@ -42,6 +42,7 @@ export default {
     activeIndex() {
       let temp = 0;
       let bol = this.lyricAry.some((item, index) => {
+          // console.log('item:'+item,'index:'+index)
         temp = index;
         return this.currentTime <= item[0];
       });

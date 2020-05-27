@@ -4,17 +4,18 @@
     :style="{backgroundImage:`url(${bg})`,color:'red'}"
   >
     <Record :img='img' @click="change" :isStop='isStop'></Record>
+
     <Lyric :lyric='lyric' :title='title' :currentTime='currentTime'></Lyric>
-    <audio :src="music" ref='audio'></audio>
-    <BOTBTN @stop="change" @prev='prevFn' @next="nextFn" :isStop='isStop'></BOTBTN>
+    <audio :src="music" controls="controls" ref='audio'></audio>
+    <play-bar @stop="change" @prev='prevFn' @next="nextFn" :isStop='isStop'></play-bar>
   </div>
 </template>
 <script>
 // @ is an alias to /src
 import { getMusicDetail,getSongUrl,getLyric } from "@/api/api.js";
-import Record from './record'
-import Lyric from './lyric'
-import BOTBTN from './btn'
+import Record from './play/record'
+import Lyric from './play/lyric'
+import PlayBar from './play/btn'
 export default {
   name: "play",
   data() {
@@ -28,14 +29,25 @@ export default {
       timer:null ,
       isStop:true,
       idList:[569200213,569213220,1436910205],
-      idIndex:0
+      idIndex:0,
+      duration:0
     };
   },
   created() {
     this.getMusicInfo(569200213);
+    this.$nextTick(()=>{
+      setTimeout(()=>{
+        this.isStop = !this.isStop
+        this.change(this.isStop)
+        console.log(this.isStop)
+      },1000)
+    })
 
   },
-  components: {Record,Lyric,BOTBTN},
+  mounted() {
+
+  },
+  components: {Record,Lyric,PlayBar},
   methods: {
     getMusicInfo(id) {
         switch (id) {
@@ -77,8 +89,12 @@ export default {
       }
     },
     updateTime(){
+      this.duration = this.$refs.audio.duration
       this.timer = setInterval(() => {
         this.currentTime = this.$refs.audio.currentTime;
+        if(this.currentTime>=this.duration){
+          this.nextFn()
+        }
       }, 10);
     }
   }

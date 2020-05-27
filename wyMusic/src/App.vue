@@ -8,7 +8,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Play from './components/play'
+import Play from './views/PlayMusic'
 import Loading from './components/loading'
 export default {
   name: 'App',
