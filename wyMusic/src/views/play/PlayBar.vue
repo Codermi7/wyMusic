@@ -1,15 +1,15 @@
 <template>
-    <div class='bot_btn_box'>
-        <span class='icon_prev iconfont' @click="prev"></span>
-        <span :class='(isStop?"icon_play":"icon_stop")+" iconfont"' @click='change'></span>
-        <span class='icon_next iconfont' @click='next'></span>
-    </div>
+        <div class='bot_btn_box'>
+            <span class='icon_prev iconfont' @click="prev"></span>
+            <span :class='(isStop?"icon_play":"icon_stop")+" iconfont"' @click='change'></span>
+            <span class='icon_next iconfont' @click='next'></span>
+        </div>
 </template>
 <script>
 // @ is an alias to /src
 // icon_play
 export default {
-    name: 'XXX',
+    name: 'PlayBar',
     props:["isStop"],
     data() {
         return {}

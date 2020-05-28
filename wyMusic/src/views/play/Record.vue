@@ -1,5 +1,5 @@
 <template>
-  <div class='record_box' @click='click'>
+  <div class='record_box'>
     <div
       class="record"
       :class='{stop:isStop}'
@@ -7,10 +7,11 @@
       <img
         :src="img"
         alt=""
+
       >
-      <div class="record_bg"></div>
+      <div class="record_bg" @click='click'></div>
     </div>
-    <div class="btn" v-show='isStop'></div>
+    <div class="btn" @click='click' v-show='isStop'></div>
   </div>
 </template>
 <script>
@@ -57,7 +58,7 @@ export default {
     animation: rotateMove 4s linear infinite;
     img {
       position: absolute;
-      width: 80%;
+      width: 65%;
       height: auto;
       border-radius: 50%;
       left: 50%;
@@ -69,6 +70,7 @@ export default {
       width: 100%;
       height: 100%;
       top: 0;
+      border-radius: 50%;
       background-image: url("../../assets/imgs/circle.png");
       background-position: center center;
       background-size: contain;

@@ -13,9 +13,9 @@
 <script>
 // @ is an alias to /src
 import { getMusicDetail,getSongUrl,getLyric } from "@/api/api.js";
-import Record from './play/record'
-import Lyric from './play/lyric'
-import PlayBar from './play/btn'
+import Record from './play/Record'
+import Lyric from './play/Lyric'
+import PlayBar from './play/PlayBar'
 export default {
   name: "play",
   data() {

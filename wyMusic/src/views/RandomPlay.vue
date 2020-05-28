@@ -7,6 +7,7 @@
 
             <Lyric :lyric='lyric' :title='title' :currentTime='currentTime'></Lyric>
             <audio :src="music"  ref='audio'></audio>
+            <ProgressBar :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
             <play-bar @stop="change" @prev='prevFn' @next="nextFn" :isStop='isStop'></play-bar>
         </div>
     
@@ -14,9 +15,10 @@
 
 <script>
     import { getNewsMusic,NewSong,getPlayUrl,getLyric } from "@/api/music.js";
-    import Record from './play/record'
-    import Lyric from './play/lyric'
-    import PlayBar from './play/btn'
+    import Record from './play/Record'
+    import Lyric from './play/Lyric'
+    import PlayBar from './play/PlayBar'
+    import ProgressBar from "./play/ProgressBar";
     export default {
         name: "RandomPlay",
         data() {
@@ -31,18 +33,14 @@
                 isStop:true,
                 idList:[569200213,569213220,1436910205],
                 idIndex:0,
-                duration:0,
+                duration:300,
                 newsMusicList:[]
             };
         },
         created() {
             this._getHotsMusic()
-
         },
-        mounted() {
-
-        },
-        components: {Record,Lyric,PlayBar},
+        components: {Record,Lyric,PlayBar,ProgressBar},
         methods: {
             _getHotsMusic(){
                 getNewsMusic().then(res=>{
@@ -50,14 +48,12 @@
                         let obj = JSON.parse(JSON.stringify(new NewSong(i)))
                         this.newsMusicList.push(obj)
                     }
-                    console.log(this.newsMusicList[0])
              }).then(()=>{
                     this._getMusicInfo(this.idIndex)
                 })
             },
             _getMusicInfo(curIndex) {
                 let  { id,author,bg,img,name } = this.newsMusicList[curIndex]
-                console.log(this.newsMusicList[curIndex])
                 this.title=name+'     '+author
                 this.bg = bg
                 this.img = img
@@ -89,25 +85,34 @@
                 }
             },
             updateTime(){
-                this.duration = this.$refs.audio.duration
                 this.timer = setInterval(() => {
                     this.currentTime = this.$refs.audio.currentTime;
+                    if(this.$refs.audio.duration){
+                        this.duration = this.$refs.audio.duration
+                    }
                     if(this.currentTime>=this.duration){
                         console.log('over')
+                        clearInterval(this.timer)
+                        this.currentTime = 0
                         this.nextFn()
-                        this.timer = null
                     }
                 }, 10);
+            },
+            JumpProgress(pre) {
+                console.log(pre)
+                this.$refs.audio.currentTime = this.duration*pre/100
+                console.log(this.currentTime)
             }
         },
         watch: {
             'music':function () {
                 console.log('切换')
                 this.$nextTick(()=>{
-                    this.isStop = !this.isStop
-                    this.change(this.isStop)
+                this.isStop = !this.isStop
+                this.change(this.isStop)
                 })
-            }
+
+            },
         }
     };
 </script>
