@@ -3,9 +3,14 @@
         <div class="search">
             <router-link to="/search"><span class="iconfont icon-sousuo"></span>搜索</router-link>
         </div>
+        <play-music :class="playShow?'show':'hidden'"
+                    @close="close"
+                    ref="play"
+                    :cur-music="curMusic"
+                    v-if="curMusic"
+                   >
 
-        <audio ref="audio" :src="getMusicUrl"></audio>
-        <play-music :class="playShow?'show':'hidden'" @close="close" ref="play"></play-music>
+        </play-music>
         <van-popup v-model="PopShow"
                    position="bottom"
                    :style="{ height: '40%' }"
@@ -13,28 +18,36 @@
                    close-icon="close"
         >
             <h3>当前播放</h3>
-            <div v-for="(item,index) in Musics" :class='{active:index==currentIndex,"item-info":true}' :key="item.id">
-                <div class="list-left">
-                    <span v-show="currentIndex==index" class="iconfont icon-yinlianglabashengyin-xianxing cur"></span>
-                    <span class="name">{{item.name}}</span>
-                    <span class="author">{{item.author}}</span>
+            <div class="music-list">
+                <div v-for="(item,index) in Musics" :class='{active:index==currentIndex,"item-info":true}' :key="item.id">
+                    <div class="list-left" @click="toPlay(index)">
+                        <span v-show="currentIndex==index" class="iconfont icon-yinlianglabashengyin-xianxing cur"></span>
+                        <span class="name">{{item.name}}</span>
+                        <span class="author">{{item.author}}</span>
+                    </div>
+                    <span class="iconfont icon-close list-right"></span>
                 </div>
-                <span class="iconfont icon-close list-right"></span>
             </div>
-            <div></div>
+
         </van-popup>
-        <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"></main-play-bar>
+        <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
+                       :cur-music="curMusic"
+                       :img="getDefaultImg"
+
+        >
+
+        </main-play-bar>
     </div>
 
 </template>
 
 <script>
     import {MainPlayBar} from "../components";
-    import { mapGetters,mapState } from "vuex";
+    import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
     import {getFirstList,localStore,getSongUrl,getLyric} from "../api/api";
     import bg from '@/assets/imgs/bg.jpg'
-    // import img from '@/assets/imgs/avtx.jpg'
+    import img from '@/assets/imgs/avtx.jpg'
     export default {
         name: "Home",
         components: {
@@ -46,26 +59,47 @@
               playShow:false,
               PopShow:false,
               Musics:null,
-              currentIndex:null
+              currentIndex:null,
+              curMusic:[],
+              musicStore:null,
+              idStore:null,
+              enter:true
           }
         },
         created() {
-            const store = new localStore('MusicList')
-            const currentIndex = new localStore('currentIndex')
-            this.Musics = store.getStore()
-            this.currentIndex = currentIndex.getStore()
-            if(!this.Musics){
-                this._getFirstList()
-            }
+
+            this.musicStore = new localStore('MusicList')
+            this.idStore= new localStore('currentIndex')
+            this.Musics = this.musicStore.getStore()
+            this.currentIndex = this.idStore.getStore()
             if(!this.currentIndex){
                 this.currentIndex = 0
-                currentIndex.setStore(this.currentIndex)
+                this.idStore.setStore(this.currentIndex)
             }
-
+            if(!this.Musics){
+                this.Musics=[]
+                this._getFirstList().then(res=>{
+                    this.curMusic = res[this.currentIndex]
+                })
+            }
+            else {
+                this.curMusic = this.Musics[this.currentIndex]
+            }
+            this.enter = false
         },
         mounted() {
             this.$EventBus.$on('busPopup', ()=> {
               this.PopShow = true
+            })
+            this.$EventBus.$on('next',()=>{
+                this.currentIndex = this.currentIndex + 1 > this.Musics.length ? 0 : this.currentIndex + 1
+                this.$refs.play.isStop = true
+                this.$refs.play.change( this.$refs.play.isStop)
+            })
+            this.$EventBus.$on('prev',()=>{
+                this.currentIndex = this.currentIndex - 1 < 0 ? this.Musics.length-1 : this.currentIndex - 1
+                this.$refs.play.isStop = true
+                this.$refs.play.change( this.$refs.play.isStop)
             })
         },
         methods: {
@@ -87,10 +121,13 @@
                            }
                        const lrc = await getLyric(Music.id)
                        Music.lyric = lrc.lrc.lyric
-                       array.push(Music)
+                       if(Music.music){
+                           array.push(Music)
+                       }
                    }
-                   this.store.setStore(array)
-                   this.Musics = this.store.getStore()
+                   this.musicStore.setStore(array)
+                   this.Musics = this.musicStore.getStore()
+                   return  this.Musics
                }
 
             },
@@ -106,6 +143,11 @@
             },
             ShowPopup() {
                 this.PopShow = true;
+            },
+            toPlay(index) {
+               this.currentIndex = index
+                this.$refs.play.isStop = true
+                this.$refs.play.change( this.$refs.play.isStop)
             }
             // updateTime(){
             //     let flag = true
@@ -127,8 +169,19 @@
             // },
         },
         computed: {
-            ...mapGetters(['getMusicUrl','getDuration','getCurrentTime','getStatus']),
-            ...mapState(['currentMusic'])
+            ...mapGetters(['getStatus']),
+            getDefaultImg() {
+                return img
+            }
+        },
+        watch: {
+            "currentIndex":function () {
+                if(!this.enter){
+                    this.idStore.setStore(this.currentIndex)
+                    this.curMusic = this.Musics[this.currentIndex]
+                }
+
+            }
         }
     }
 </script>
@@ -180,44 +233,53 @@
             padding: 15px;
             box-sizing: border-box;
             z-index: 99999;
-        }
-        .item-info {
-            height: 5vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            .list-left {
-                flex: 7;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                .cur {
-                    font-size: 18px;
-                    padding-right: 10px;
+            overflow: hidden;
+            .music-list {
+                height: 100%-10px;
+                overflow-y: auto;
+                &::-webkit-scrollbar-corner{
+                    display: none;
                 }
-                .name{
-                    font-size: 16px;
-                    padding-right: 10px;
+            }
+            .item-info {
+                height: 5vh;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .list-left {
+                    flex: 7;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    .cur {
+                        font-size: 18px;
+                        padding-right: 10px;
+                    }
+                    .name{
+                        font-size: 16px;
+                        padding-right: 10px;
+                    }
+                    .author {
+                        font-size: 12px;
+                        color:#b3b0b0;
+                    }
                 }
-                .author {
-                    font-size: 12px;
+                .list-right {
+                    flex: 3;
+                    text-align: right;
+                    padding-right: 10px;
                     color:#b3b0b0;
                 }
+                &.active {
+                    .list-left {
+                        color: red;
+                        .author {
+                            color: red;
+                        }
+                    }
+                }
             }
-            .list-right {
-                flex: 3;
-                text-align: right;
-                padding-right: 10px;
-                color:#b3b0b0;
-            }
-            &.active {
-               .list-left {
-                   color: red;
-                   .author {
-                       color: red;
-                   }
-               }
-            }
+
         }
 
 

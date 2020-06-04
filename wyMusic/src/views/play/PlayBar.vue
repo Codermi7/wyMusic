@@ -22,10 +22,10 @@ export default {
         this.$emit('stop',!this.isStop)
       },
       prev(){
-        this.$emit('prev')
+        this.$EventBus.$emit('prev')
       },
       next(){
-        this.$emit('next')
+          this.$EventBus.$emit('next')
       },
         showPop(){
           this.$EventBus.$emit('busPopup')
@@ -47,13 +47,15 @@ export default {
     z-index: 200;
     text-align: center;
     color:#fff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     span:nth-child(3){
       font-weight: 600;
+        font-size: 45px;
     }
     span{
       font-size: 40px;
-      margin: 0 5vw;
-
     }
   }
 </style>

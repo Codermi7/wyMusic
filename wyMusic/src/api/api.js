@@ -10,7 +10,7 @@ export function getLyric(id) {
 }
 //进去默认歌曲
 export function getFirstList() {
-  return http.get('/playList/detail',{id:1})
+  return http.get('/playList/detail',{id:2829883282})
 
 }
 export function localStore(name) {

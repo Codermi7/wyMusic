@@ -63,7 +63,6 @@ export default {
   },
   watch: {
     activeIndex(cur) {
-      console.log(cur)
       if(cur<3)return;
       this.moveY = 0
       for(let i = 3;i<=cur;i++){

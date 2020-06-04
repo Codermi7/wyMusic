@@ -1,12 +1,10 @@
 <template>
-    <div class="main-play">
-        <div class="left" @click="handleClick">
-            <div class="tx">
-                <img :src="getCurrentImg">
-            </div>
+    <div class="main-play" v-if="curMusic">
+        <div class="left" @click="handleClick" >
+            <img :src="this.curMusic.img">
             <div>
-                <p class="music-title">{{this.$store.state.currentMusic.title}}</p>
-                <p class="music-author">{{this.$store.state.currentMusic.title}}</p>
+                <p class="music-title">{{this.curMusic.name}}</p>
+                <p class="music-author">{{this.curMusic.author}}</p>
             </div>
         </div>
         <div class="right">
@@ -19,6 +17,7 @@
 <script>
     export default {
         name: "index",
+        props: ["curMusic","img"],
         methods: {
             handleClick() {
                 this.$emit('toPlay')
@@ -28,16 +27,6 @@
             },
             showPopup() {
                 this.$emit('ShowPopup')
-            }
-        },
-        computed: {
-            getCurrentImg() {
-                let localCur = localStorage.getItem('currentIndex')
-
-                let Musics = JSON.parse(localStorage.getItem('MusicList'))
-                console.log(Musics)
-                return Musics[localCur].img
-
             }
         },
     }
@@ -52,7 +41,7 @@
         width: 100%;
         justify-content: space-between;
         align-items: center;
-        height: 6vh;
+        height: 8vh;
         padding: 0 10px;
         box-sizing: border-box;
         .left {
@@ -64,7 +53,7 @@
                 color: #999;
             }
             img {
-                height: 4vh;
+                height: 6vh;
                 border-radius: 50%;
                 margin:0 20px 0 10px;
             }
@@ -73,7 +62,7 @@
             flex: 4;
             text-align: center;
             span {
-                font-size: 30px;
+                font-size: 36px;
                 margin: 0 10px;
             }
         }

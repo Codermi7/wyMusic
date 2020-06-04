@@ -10,9 +10,7 @@
                        :format-tooltip="ShowDate"
                        v-model="percent"
                        :show-tooltip="false"
-
             >
-
             </el-slider>
 <!--            -->
         </div>
