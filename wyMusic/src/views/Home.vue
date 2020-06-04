@@ -30,6 +30,7 @@
             </div>
 
         </van-popup>
+
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="curMusic"
                        :img="getDefaultImg"
