@@ -4,7 +4,7 @@
     <div class="lyric">
       <div
         class="lyric_list"
-        :style="{transform:`translateY(${moveY}px)`}"
+        :style="{transform:`translateY(${moveY}px)`,transition:0.3+`s`}"
       >
         <p
           v-for='(item,index) in lyricAry'
@@ -66,18 +66,13 @@ export default {
       console.log(cur)
       if(cur<3)return;
       this.moveY = 0
-      for(let i = 3;i<cur;i++){
+      for(let i = 3;i<=cur;i++){
         let el = this.$refs.p[i]
         if(el){
           let obj = getComputedStyle(el);
           this.moveY -= parseFloat(obj.height) + parseFloat(obj.paddingTop) * 2;
         }
       }
-      // let el = this.$refs.p[cur - 1];
-      // if (el) {
-      //   let obj = getComputedStyle(el);
-      //   this.moveY -= parseFloat(obj.height) + parseFloat(obj.paddingTop) * 2;
-        // console.log(this.moveY);
     },
     // activeIndex(cur) {
     //   console.log(cur)

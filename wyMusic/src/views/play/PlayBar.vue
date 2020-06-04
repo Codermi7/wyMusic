@@ -1,8 +1,10 @@
 <template>
         <div class='bot_btn_box'>
+            <span class="iconfont icon-caidan-dakai" @click="showPop"></span>
             <span class='icon_prev iconfont' @click="prev"></span>
             <span :class='(isStop?"icon_play":"icon_stop")+" iconfont"' @click='change'></span>
             <span class='icon_next iconfont' @click='next'></span>
+            <span class="iconfont icon-caidan-dakai" @click="showPop"></span>
         </div>
 </template>
 <script>
@@ -24,10 +26,13 @@ export default {
       },
       next(){
         this.$emit('next')
-      }
+      },
+        showPop(){
+          this.$EventBus.$emit('busPopup')
+        }
     },
     components: {
-        
+
     }
 }
 </script>
@@ -42,7 +47,7 @@ export default {
     z-index: 200;
     text-align: center;
     color:#fff;
-    span:nth-child(2){
+    span:nth-child(3){
       font-weight: 600;
     }
     span{

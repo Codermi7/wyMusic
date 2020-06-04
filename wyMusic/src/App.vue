@@ -8,19 +8,21 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Play from './views/RandomPlay'
-import Loading from './components/loading'
+// import Play from './views/PlayMusic'
+// import Home from './views/Home'
+import Container from "./views/Container";
+import Loading from './components/Loading/loading'
 export default {
   name: 'App',
   data(){
     return{
-      showCom:Loading
+      showCom:Loading,
     }
   },
   created() {
     window.addEventListener('load',()=>{
       setTimeout(() => {
-        this.showCom = Play;
+        this.showCom = Container;
       }, 500);
     })
   }
@@ -28,6 +30,7 @@ export default {
 </script>
 
 <style lang='less'>
+  @import "assets/css/icon.css";
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }

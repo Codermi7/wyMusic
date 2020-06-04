@@ -86,7 +86,8 @@
             },
             updateTime(){
                 this.timer = setInterval(() => {
-                    this.currentTime = this.$refs.audio.currentTime;
+                    if(this.$refs.audio.currentTime)
+                    this.currentTime = this.$refs.audio.currentTime
                     if(this.$refs.audio.duration){
                         this.duration = this.$refs.audio.duration
                     }

@@ -1,10 +1,22 @@
 <template>
     <div class="progress-bar">
+        <div class="style-time">{{getCurrentTime}}</div>
         <div class="block">
             <span class="demonstration"></span>
-            <el-slider class="base" ref="progress" @click.native="sendCurrentPro" :format-tooltip="ShowDate"  v-model="percent"></el-slider>
+            <el-slider class="base"
+                       ref="progress"
+                       @touchmove.native="handleStart"
+                       @change="sendCurrentPro"
+                       :format-tooltip="ShowDate"
+                       v-model="percent"
+                       :show-tooltip="false"
+
+            >
+
+            </el-slider>
 <!--            -->
         </div>
+        <div class="style-time">{{totalTime|toFormDate}}</div>
     </div>
 </template>
 
@@ -21,7 +33,8 @@
         },
         data(){
             return {
-                percent:0
+                percent:0,
+                flag:true,
             }
         },
         methods: {
@@ -36,17 +49,38 @@
               date = '0'+f+":"+m
               return date
           },
+            handleStart() {
+              this.flag = false
+            },
           sendCurrentPro() {
-              console.log('555')
               this.$emit('JumpProgress',this.$refs.progress.value)
+              this.flag = true
           }
 
         },
         computed: {
+            getCurrentTime() {
+                return this.ShowDate(this.percent)
+            }
         },
         watch: {
             'currentTime':function () {
-                this.percent = (this.currentTime/this.totalTime)*100
+                if(this.flag){
+                    this.percent = (this.currentTime/this.totalTime)*100
+                }
+
+            }
+        },
+        filters: {
+            toFormDate(value) {
+                let date;
+                let f = parseInt(value/60);
+                let m = parseInt(value-f*60);
+                if(m<10){
+                    m = '0'+ m
+                }
+                date = '0'+f+":"+m
+                return date
             }
         }
     }
@@ -56,11 +90,37 @@
     .progress-bar {
         position: fixed;
         bottom: 10vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .style-time {
+            color: #fff;
+            font-size: 12px;
+            padding: 0 10px;
+        }
         .base {
-            width: calc(100vw - 40px);
-            margin-right: 20px;
-            margin-left: 20px;
+            width: 70vw;
             border-radius: 30px;
+        }
+        /deep/.el-slider__runway {
+            height: 1px;
+            background: darkgray;
+            margin: 2px 0;
+        }
+        /deep/.el-slider__bar {
+            height: 1px;
+            background: azure;
+        }
+        /deep/.el-slider__button-wrapper {
+            height: 26px;
+            width: 5px;
+            top:-12px;
+            .el-slider__button {
+                height: 5px;
+                width: 5px;
+                border: none;
+            }
         }
     }
 </style>

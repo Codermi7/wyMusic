@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000'
+const baseURL = 'http://10.168.1.77:3000'
 function http(url,data={},type='get'){
   let obj = {
     method:type,

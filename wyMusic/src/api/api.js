@@ -1,5 +1,4 @@
 import http from './http'
-import $ from 'jquery'
 export function getMusicDetail(id) {
   return http.get('/playlist/detail',{id})
 }
@@ -9,16 +8,19 @@ export function getSongUrl(id) {
 export function getLyric(id) {
   return http.get('/lyric',{id})
 }
-export function getRandom() {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url:'https://api.uomg.com/api/rand.music?sort=%E7%83%AD%E6%AD%8C%E6%A6%9C&format=json',
-      success:(res)=>{
-        resolve(res)
-      },
-      error:(err)=> {
-        reject(err)
-      }
-    })
-  })
+//进去默认歌曲
+export function getFirstList() {
+  return http.get('/playList/detail',{id:1})
+
+}
+export function localStore(name) {
+  this.name = name
+}
+localStore.prototype = {
+  getStore:function () {
+    return JSON.parse(window.localStorage.getItem(this.name))
+  },
+  setStore:function (obj) {
+    window.localStorage.setItem(this.name,JSON.stringify(obj))
+  }
 }
