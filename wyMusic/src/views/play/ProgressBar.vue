@@ -5,7 +5,8 @@
             <span class="demonstration"></span>
             <el-slider class="base"
                        ref="progress"
-                       @touchmove.native="handleStart"
+                       @touchstart.native="handleStart"
+                       @touchend.native="handleEnd"
                        @change="sendCurrentPro"
                        :format-tooltip="ShowDate"
                        v-model="percent"
@@ -46,9 +47,13 @@
               }
               date = '0'+f+":"+m
               return date
+
           },
             handleStart() {
               this.flag = false
+            },
+            handleEnd() {
+              this.flag = true
             },
           sendCurrentPro() {
               this.$emit('JumpProgress',this.$refs.progress.value)

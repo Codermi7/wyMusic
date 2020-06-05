@@ -1,15 +1,15 @@
 <template>
     <div class="home">
         <div class="search">
-            <router-link to="/search"><span class="iconfont icon-sousuo"></span>搜索</router-link>
+            <router-link to="/home/search"><span class="iconfont icon-sousuo"></span>搜索</router-link>
         </div>
+
         <play-music :class="playShow?'show':'hidden'"
                     @close="close"
                     ref="play"
-                    :cur-music="curMusic"
+                    :cur-music="getCurMusic"
                     v-if="curMusic"
                    >
-
         </play-music>
         <van-popup v-model="PopShow"
                    position="bottom"
@@ -30,20 +30,20 @@
             </div>
 
         </van-popup>
-
+        <router-view class="router"></router-view>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
-                       :cur-music="curMusic"
+                       :cur-music="getCurMusic"
                        :img="getDefaultImg"
-
+                       v-if="curMusic"
         >
-
         </main-play-bar>
+
     </div>
 
 </template>
 
 <script>
-    import {MainPlayBar} from "../components";
+    import { MainPlayBar} from "../components";
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
     import {getFirstList,localStore,getSongUrl,getLyric} from "../api/api";
@@ -53,7 +53,7 @@
         name: "Home",
         components: {
             MainPlayBar,
-            PlayMusic
+            PlayMusic,
         },
         data() {
           return {
@@ -68,32 +68,14 @@
           }
         },
         created() {
-
-            this.musicStore = new localStore('MusicList')
-            this.idStore= new localStore('currentIndex')
-            this.Musics = this.musicStore.getStore()
-            this.currentIndex = this.idStore.getStore()
-            if(!this.currentIndex){
-                this.currentIndex = 0
-                this.idStore.setStore(this.currentIndex)
-            }
-            if(!this.Musics){
-                this.Musics=[]
-                this._getFirstList().then(res=>{
-                    this.curMusic = res[this.currentIndex]
-                })
-            }
-            else {
-                this.curMusic = this.Musics[this.currentIndex]
-            }
-            this.enter = false
+           this._renderPage()
         },
         mounted() {
             this.$EventBus.$on('busPopup', ()=> {
               this.PopShow = true
             })
             this.$EventBus.$on('next',()=>{
-                this.currentIndex = this.currentIndex + 1 > this.Musics.length ? 0 : this.currentIndex + 1
+                this.currentIndex = this.currentIndex + 1 >= this.Musics.length ? 0 : this.currentIndex + 1
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
             })
@@ -132,6 +114,28 @@
                }
 
             },
+            _renderPage() {
+                this.musicStore = new localStore('MusicList')
+                this.idStore= new localStore('currentIndex')
+                // this.Musics = this.musicStore.getStore()
+                this.currentIndex = this.idStore.getStore()
+                if(!this.currentIndex){
+                    console.log('55')
+                    this.currentIndex = 0
+                    this.idStore.setStore(this.currentIndex)
+                }
+                if(!this.Musics){
+                    this.Musics=[]
+                    console.log('request')
+                    this._getFirstList().then(res=>{
+                        this.curMusic = res[this.currentIndex]
+                    })
+                }
+                else {
+                    this.curMusic = this.Musics[this.currentIndex]
+                }
+                this.enter = false
+            },
             goToPlay() {
                 // this.$router.push('/play')
                 this.playShow = true
@@ -150,29 +154,14 @@
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
             }
-            // updateTime(){
-            //     let flag = true
-            //     this.$store.dispatch('SetTimer',setInterval(() => {
-            //         console.log(this.$refs.audio.currentTime)
-            //         if(this.$refs.audio.currentTime)
-            //           this.$store.commit('updateCurrentTime',this.$refs.audio.currentTime)
-            //         if(this.$refs.audio.duration && flag){
-            //             this.$store.commit('updateDuration',this.$refs.audio.duration)
-            //             flag = false
-            //         }
-            //         if(this.getCurrentTime>=this.getDuration){
-            //             console.log('over')
-            //             this.$store.commit('clearTimer')
-            //             this.$store.commit('updateCurrentTime',0)
-            //             // this.nextFn()
-            //         }
-            //     }, 10))
-            // },
         },
         computed: {
             ...mapGetters(['getStatus']),
             getDefaultImg() {
                 return img
+            },
+            getCurMusic() {
+                return this.curMusic
             }
         },
         watch: {
@@ -282,8 +271,8 @@
             }
 
         }
-
-
+        .router {
+        }
     }
 
 </style>

@@ -6,7 +6,7 @@
     <span class="iconfont icon-fanhui back" @click="goBack"></span>
     <Record :img='curMusic.img' @click="change" :isStop='isStop'></Record>
 
-    <Lyric  :lyric='curMusic.lyric ? curMusic.lyric:""' :title='curMusic.name' :currentTime='currentTime'></Lyric>
+    <Lyric  :lyric='curMusic.lyric ? curMusic.lyric : ""' :title='curMusic.name' :currentTime='currentTime'></Lyric>
     <audio :src="curMusic.music"  ref='audio'></audio>
     <ProgressBar :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
     <play-bar @stop="change" :isStop='isStop'></play-bar>

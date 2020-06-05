@@ -2,16 +2,30 @@ import http from './http'
 export function getMusicDetail(id) {
   return http.get('/playlist/detail',{id})
 }
+//获取歌曲播放地址
 export function getSongUrl(id) {
   return http.get('/song/url',{id})
 }
+//获取歌词
 export function getLyric(id) {
   return http.get('/lyric',{id})
 }
 //进去默认歌曲
 export function getFirstList() {
-  return http.get('/playList/detail',{id:2829883282})
+  return http.get('/playlist/detail',{id:2829883282})
 
+}
+//获取歌单精选
+export function getTopPlayList() {
+  return http.get('/top/playlist',{limit:4})
+}
+//获取热门搜索
+export function getHotDetail() {
+  return http.get('/search/hot/detail')
+}
+//搜索
+export function searchMusic(keywords) {
+  return http.get('/search',{keywords,limit:20})
 }
 export function localStore(name) {
   this.name = name

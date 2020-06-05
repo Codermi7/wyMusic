@@ -15,11 +15,36 @@ const routes = [
     meta: {
       title:'首页'
     },
+    children:[
+      {
+        path: '',
+        redirect:'store'
+      },
+      {
+        path:'store',
+        component:()=>import('../views/MusicStore')
+      },
+      {
+        path:'search',
+        component:()=>import('../views/SearchBox'),
+        children:[
+          {
+            path:'',
+            redirect:'hot'
+          },
+          {
+            path:'hot',
+            component:()=>import('../views/HotMusic')
+          },
+          {
+            path: 'result',
+            component:()=>import('../views/ResultMusic')
+          }
+        ]
+
+      }
+    ]
   },
-  {
-    path:'/play',
-    component:()=>import('../views/PlayMusic')
-  }
 ]
 const router = new VueRouter({
   routes,

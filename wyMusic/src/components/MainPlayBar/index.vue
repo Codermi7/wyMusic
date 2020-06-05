@@ -1,10 +1,10 @@
 <template>
-    <div class="main-play" v-if="curMusic">
+    <div class="main-play" >
         <div class="left" @click="handleClick" >
-            <img :src="this.curMusic.img">
+            <img :src="curMusic.img">
             <div>
-                <p class="music-title">{{this.curMusic.name}}</p>
-                <p class="music-author">{{this.curMusic.author}}</p>
+                <p class="music-title">{{curMusic.name}}</p>
+                <p class="music-author">{{curMusic.author}}</p>
             </div>
         </div>
         <div class="right">
@@ -18,6 +18,14 @@
     export default {
         name: "index",
         props: ["curMusic","img"],
+        mounted() {
+            var winHeight = $(window).height();
+            $(window).resize(function() {
+                var thisHeight = $(this).height();
+                var keyboardHeight = thisHeight - winHeight;
+                $(".main-play").css({ 'bottom': keyboardHeight + 'px' });
+            });
+        },
         methods: {
             handleClick() {
                 this.$emit('toPlay')
