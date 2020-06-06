@@ -177,7 +177,6 @@
                     this.musicStore.setStore(this.Musics)
                     this.$refs.play.isStop = true
                     this.$refs.play.change( this.$refs.play.isStop)
-
                 }
                 else {
                     alert('暂时没有版权，很抱歉')
