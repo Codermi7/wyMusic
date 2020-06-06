@@ -94,7 +94,7 @@
                 font-size: 18px;
                 margin-bottom: 5px;
                 img {
-                    height: 2vh;
+                    height: 14px;
                     margin-left: 10px;
                 }
                 span {
