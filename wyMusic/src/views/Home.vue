@@ -180,7 +180,6 @@
                     const lrc = await getLyric(Music.id)
                     Music.lyric = lrc.lrc.lyric
                     if(Music.music){
-                        console.log(Music)
                         this.Musics.splice(++this.currentIndex,0,Music)
                         this.musicStore.setStore(this.Musics)
                         this.$refs.play.isStop = true
@@ -192,7 +191,18 @@
                     }
                 }
                 else {
-                    this.playShow = true
+                    if(this.curMusic.id==id){
+                        this.change()
+                        this.playShow = true
+                    }
+                    else {
+                        for(let i in this.Musics){
+                            if(this.Musics[i].id==id){
+                                this.toPlay(i)
+                            }
+                        }
+                    }
+
                 }
 
             }

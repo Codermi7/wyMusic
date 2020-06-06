@@ -9,7 +9,7 @@
                    placeholder="搜索"
             />
         </div>
-        <div class="popup" ref="popup" v-show="keywords!=='' && isShow">
+        <div class="popup" ref="popup" v-show="wordsList.length!=0&& isShow&&keywords!=''">
             <div v-for="(item,index) in wordsList"
                  :key="index"
                  class="pop-item"
@@ -33,7 +33,7 @@
                 keywords:"",
                 timer:null,
                 wordsList:[],
-                isShow:true,
+                isShow:false,
 
             }
         },
@@ -47,6 +47,7 @@
             async _searchMusic(keywords){
                 let res = await searchMusic(keywords)
                 if(res.code==200){
+                    this.wordsList=[]
                     for(let item of res.result.songs){
                         if(!this.wordsList.includes(item.name)&&this.wordsList.length<10){
                             this.wordsList.push(item.name)
@@ -58,7 +59,6 @@
                 }
             },
             handleSearch() {
-                this.wordsList=[]
                 this.timer && clearTimeout(this.timer)
                 this.timer = setTimeout(()=>{
                     if(this.keywords!=''){
@@ -79,16 +79,16 @@
 
             },
             toSearchResult(index) {
-                let keywords = this.wordsList[index]
-                if(this.$route.path=='/home/search/hot'){
-                    this.$router.push({path:'/home/search/result',query:{keywords}})
-                }
-                else if(this.$route.path=='/home/search/result'){
-                    this.$router.replace({
-                        query:merge(this.$route.query,{keywords})
-                    })
-                }
-                this.keywords=''
+                    let keywords = this.wordsList[index]
+                    if(this.$route.path=='/home/search/hot'){
+                        this.$router.push({path:'/home/search/result',query:{keywords}})
+                    }
+                    else if(this.$route.path=='/home/search/result'){
+                        this.$router.replace({
+                            query:merge(this.$route.query,{keywords})
+                        })
+                    }
+                    this.keywords=''
             }
         }
     }
@@ -132,7 +132,7 @@
         }
         .popup {
             position: fixed;
-            top: 7vh;
+            top: 60px;
             left: 5vw;
             background: #fff;
             box-shadow: 0 0 5px 1px #c8c9cc;
