@@ -24,6 +24,7 @@
 
 <script>
     import {searchMusic} from "../api/api";
+    import merge from 'webpack-merge';
     export default {
         name: "SearchBox",
         data() {
@@ -49,6 +50,9 @@
                     for(let item of res.result.songs){
                         if(!this.wordsList.includes(item.name)&&this.wordsList.length<10){
                             this.wordsList.push(item.name)
+                        }
+                        else {
+                            return
                         }
                     }
                 }
@@ -76,8 +80,13 @@
             },
             toSearchResult(index) {
                 let keywords = this.wordsList[index]
-                if(!this.$route.path=='/home/search/hot'){
+                if(this.$route.path=='/home/search/hot'){
                     this.$router.push({path:'/home/search/result',query:{keywords}})
+                }
+                else if(this.$route.path=='/home/search/result'){
+                    this.$router.replace({
+                        query:merge(this.$route.query,{keywords})
+                    })
                 }
                 this.keywords=''
             }
@@ -126,8 +135,9 @@
             top: 7vh;
             left: 5vw;
             background: #fff;
-            box-shadow: 0 0 5px #f2f2f2;
+            box-shadow: 0 0 5px 1px #c8c9cc;
             width: 90vw;
+            padding: 10px 0;
             .pop-item {
                 padding: 5px;
                 color: #999;
@@ -136,6 +146,7 @@
                 white-space: nowrap;
                 span {
                     padding: 0 10px;
+                    color: #c8c9cc;
                 }
             }
         }

@@ -46,7 +46,7 @@
     import { MainPlayBar} from "../components";
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
-    import {getFirstList,localStore,getSongUrl,getLyric} from "../api/api";
+    import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail} from "../api/api";
     import bg from '@/assets/imgs/bg.jpg'
     import img from '@/assets/imgs/avtx.jpg'
     export default {
@@ -84,6 +84,10 @@
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
             })
+            this.$EventBus.$on('updatePlay',(res)=>{
+                this.addMusic(res)
+            })
+
         },
         methods: {
            async _getFirstList() {
@@ -117,7 +121,7 @@
             _renderPage() {
                 this.musicStore = new localStore('MusicList')
                 this.idStore= new localStore('currentIndex')
-                // this.Musics = this.musicStore.getStore()
+                this.Musics = this.musicStore.getStore()
                 this.currentIndex = this.idStore.getStore()
                 if(!this.currentIndex){
                     console.log('55')
@@ -153,6 +157,31 @@
                this.currentIndex = index
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
+            },
+            async addMusic(info) {
+                let Music={}
+                let id = info.id
+                Music.name = info.name
+                Music.author = info.author
+                Music.id = id
+                const detail = await  getMusicDetail(Music.id)
+                Music.img = detail.songs[0].al.picUrl
+                Music.bg = bg
+                const url = await getSongUrl(Music.id)
+                Music.music = url.data[0].url
+                const lrc = await getLyric(Music.id)
+                Music.lyric = lrc.lrc.lyric
+                if(Music.music){
+                    console.log(Music)
+                    this.Musics.splice(++this.currentIndex,0,Music)
+                    this.musicStore.setStore(this.Musics)
+                    this.$refs.play.isStop = true
+                    this.$refs.play.change( this.$refs.play.isStop)
+
+                }
+                else {
+                    alert('暂时没有版权，很抱歉')
+                }
             }
         },
         computed: {

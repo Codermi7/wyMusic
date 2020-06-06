@@ -1,6 +1,6 @@
 import http from './http'
-export function getMusicDetail(id) {
-  return http.get('/playlist/detail',{id})
+export function getMusicDetail(ids) {
+  return http.get('/song/detail',{ids})
 }
 //获取歌曲播放地址
 export function getSongUrl(id) {

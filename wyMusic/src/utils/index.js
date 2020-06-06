@@ -7,6 +7,14 @@ export class HotMusic {
         this.iconUrl = info.iconUrl
     }
 }
+export class SearchList {
+    constructor(info) {
+        this.id = info.id;
+        this.name = info.name
+        this.author = info.artists[0].name
+        this.album = info.album.name
+    }
+}
 
 export  function debounce(func, delay){
     let timer = null

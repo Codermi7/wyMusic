@@ -44,7 +44,8 @@
                 }
             },
             toSearchResult(index){
-                console.log(this.hotMusics[index].word)
+                let keywords = this.hotMusics[index].word
+                this.$router.push({path:'/home/search/result',query:{keywords}})
             }
         }
     }
