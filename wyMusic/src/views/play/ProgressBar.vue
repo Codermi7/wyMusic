@@ -8,6 +8,7 @@
                        @touchstart.native="handleStart"
                        @touchmove.native="handleMove"
                        @touchend.native="handleEnd"
+                       @change="sendCurrentPro"
                        :format-tooltip="ShowDate"
                        v-model="percent"
                        :show-tooltip="false"
@@ -60,6 +61,11 @@
             handleMove(){
                 this.flag = false
             },
+          sendCurrentPro() {
+              this.$emit('JumpProgress',this.$refs.progress.value)
+              this.flag = true
+          }
+
         },
         computed: {
             getCurrentTime() {
