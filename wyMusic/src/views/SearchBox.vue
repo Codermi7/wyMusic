@@ -9,7 +9,7 @@
                    placeholder="搜索"
             />
         </div>
-        <div class="popup" ref="popup" v-show="wordsList.length!=0&& isShow&&keywords!=''">
+        <div class="popup" ref="popup" v-show="wordsList.length!=0 && isShow&& keywords!=''">
             <div v-for="(item,index) in wordsList"
                  :key="index"
                  class="pop-item"
@@ -68,6 +68,7 @@
             },
             _blur() {
                 if(this.keywords){
+                    return
                }
                else {
                    this.isShow = false
