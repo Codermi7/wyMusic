@@ -1,7 +1,9 @@
 <template>
     <div class="main-play" >
         <div class="left" @click="handleClick" >
-            <img :src="curMusic.img">
+            <img :src="curMusic.img"
+                 :class="{stop:$store.state.isStop}"
+            >
             <div>
                 <p class="music-title">{{curMusic.name}}</p>
                 <p class="music-author">{{curMusic.author}}</p>
@@ -19,7 +21,7 @@
         name: "index",
         props: ["curMusic","img"],
         mounted() {
-            var winHeight = $(window).height();
+            let winHeight = $(window).height();
             $(window).resize(function() {
                 var thisHeight = $(this).height();
                 var keyboardHeight = thisHeight - winHeight;
@@ -64,7 +66,12 @@
                 height: 6vh;
                 border-radius: 50%;
                 margin:0 20px 0 10px;
+                animation: rotateMove 4s linear infinite;
+                &.stop {
+                    animation-play-state: paused;
+                }
             }
+
         }
         .right {
             flex: 4;
@@ -72,6 +79,14 @@
             span {
                 font-size: 36px;
                 margin: 0 10px;
+            }
+        }
+        @keyframes rotateMove {
+            0% {
+                transform: rotate(0);
+            }
+            100% {
+                transform: rotate(360deg);
             }
         }
     }

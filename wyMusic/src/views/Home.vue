@@ -192,12 +192,14 @@
                 }
                 else {
                     if(this.curMusic.id==id){
-                        this.change()
+                        this.$refs.play.isStop = false
+                        this.$refs.play.change( this.$refs.play.isStop)
                         this.playShow = true
                     }
                     else {
                         for(let i in this.Musics){
                             if(this.Musics[i].id==id){
+                                this.playShow = true
                                 this.toPlay(i)
                             }
                         }
