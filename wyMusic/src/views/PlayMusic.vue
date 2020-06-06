@@ -7,7 +7,7 @@
     <Record :img='curMusic.img' @click="change" :isStop='isStop'></Record>
 
     <Lyric  :lyric='curMusic.lyric ? curMusic.lyric : ""' :title='curMusic.name' :currentTime='currentTime'></Lyric>
-    <audio :src="getMusic"  ref='audio'></audio>
+    <audio :src="getMusic" id="audio"  ref='audio'></audio>
     <ProgressBar :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
     <play-bar @stop="change" :isStop='isStop'></play-bar>
   </div>
@@ -28,12 +28,10 @@
         isStop:true,
         duration:200,
         isFirst:true,
-        baseUrl:' https://music.163.com/song/media/outer/url?id=25794014.mp3'
+        // baseUrl:' https://music.163.com/song/media/outer/url?id=25794014.mp3'
       };
     },
     props:["curMusic"],
-    created() {
-    },
     components: {Record,Lyric,PlayBar,ProgressBar},
     methods: {
       ...mapMutations(["Statechange"]),
@@ -72,7 +70,7 @@
         this.$emit('close')
       },
       joint(id){
-          return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
+          return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'| this.curMusic.music
       }
     },
     computed: {

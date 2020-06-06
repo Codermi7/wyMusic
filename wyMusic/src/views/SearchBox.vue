@@ -5,6 +5,7 @@
             <input type="text" v-model="keywords"
                    @focus="_focus"
                    @keyup="handleSearch"
+                   @keydown="searchEnter"
                    placeholder="搜索"
             />
         </div>
@@ -81,6 +82,20 @@
                         })
                     }
                     this.keywords=''
+            },
+            searchEnter(e) {
+                let keywords = this.keywords
+                if(e.keyCode==13&&keywords){
+                    if(this.$route.path=='/home/search/hot'){
+                        this.$router.push({path:'/home/search/result',query:{keywords}})
+                    }
+                    else if(this.$route.path=='/home/search/result'){
+                        this.$router.replace({
+                            query:merge(this.$route.query,{keywords})
+                        })
+                    }
+                    this.keywords=''
+                }
             }
         }
     }

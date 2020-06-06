@@ -3,7 +3,6 @@
         <div class="search">
             <router-link to="/home/search"><span class="iconfont icon-sousuo"></span>搜索</router-link>
         </div>
-
         <play-music :class="playShow?'show':'hidden'"
                     @close="close"
                     ref="play"
@@ -25,10 +24,9 @@
                         <span class="name">{{item.name}}</span>
                         <span class="author">{{item.author}}</span>
                     </div>
-                    <span class="iconfont icon-close list-right"></span>
+                    <span class="iconfont icon-close list-right" @click="delMusic(index)"></span>
                 </div>
             </div>
-
         </van-popup>
         <router-view class="router"></router-view>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
@@ -37,7 +35,6 @@
                        v-if="curMusic"
         >
         </main-play-bar>
-
     </div>
 
 </template>
@@ -204,6 +201,12 @@
 
                 }
 
+            },
+            delMusic(index) {
+               console.log(this.Musics[index].name)
+                this.Musics.splice(index,1)
+                this.curMusic = this.Musics[this.currentIndex]
+                this.musicStore.setStore(this.Musics)
             }
         },
         computed: {
