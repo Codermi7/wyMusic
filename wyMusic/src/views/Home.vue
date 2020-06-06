@@ -238,7 +238,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-
+            background: #FF3300;
             a {
                 width: 80vw;
                 height: 6vh;
@@ -247,8 +247,8 @@
                 text-align: center;
                 line-height: 6vh;
                 text-decoration: unset;
-                border: 1px solid #b3b0b0;
                 color: #252525;
+                background: #fff;
             }
         }
         .hidden {
