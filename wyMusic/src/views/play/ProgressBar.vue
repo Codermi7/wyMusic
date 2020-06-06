@@ -6,8 +6,8 @@
             <el-slider class="base"
                        ref="progress"
                        @touchstart.native="handleStart"
+                       @touchmove.native="handleMove"
                        @touchend.native="handleEnd"
-                       @change="sendCurrentPro"
                        :format-tooltip="ShowDate"
                        v-model="percent"
                        :show-tooltip="false"
@@ -53,13 +53,14 @@
               this.flag = false
             },
             handleEnd() {
-              this.flag = true
-            },
-          sendCurrentPro() {
               this.$emit('JumpProgress',this.$refs.progress.value)
               this.flag = true
-          }
 
+            },
+            handleMove(){
+                this.flag = false
+                console.log(this.$refs.progress.value)
+            },
         },
         computed: {
             getCurrentTime() {
@@ -70,6 +71,7 @@
             'currentTime':function () {
                 if(this.flag){
                     this.percent = (this.currentTime/this.totalTime)*100
+                    console.log('66')
                 }
 
             }
