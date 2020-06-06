@@ -203,8 +203,21 @@
 
             },
             delMusic(index) {
+
                 this.Musics.splice(index,1)
-                this.curMusic = this.Musics[this.currentIndex]
+                if(index==this.currentIndex){
+                    if(this.currentIndex==this.Musics.length){
+                        this.currentIndex = 0
+                        this.curMusic = this.Musics[this.currentIndex]
+                    }
+                    else {
+                        this.curMusic = this.Musics[this.currentIndex]
+                    }
+                    this.toPlay(this.currentIndex)
+                }
+                if(index<this.currentIndex){
+                    this.currentIndex--
+                }
                 this.musicStore.setStore(this.Musics)
             }
         },
