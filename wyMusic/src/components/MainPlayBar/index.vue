@@ -71,6 +71,12 @@
                     animation-play-state: paused;
                 }
             }
+            .music-title {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 38vw;
+            }
 
         }
         .right {

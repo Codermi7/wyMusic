@@ -1,6 +1,6 @@
 <template>
   <div class='lyric_box'>
-    <div class="til">{{title}}</div>
+    <div class="til">{{title}}<span>{{author}}</span></div>
     <div class="lyric">
       <div
         class="lyric_list"
@@ -21,7 +21,7 @@
 // @ is an alias to /src
 export default {
   name: "Lyric",
-  props: ["lyric", "title", "currentTime"],
+  props: ["lyric", "title", "currentTime","author"],
   data() {
     return {
       moveY: 0
@@ -103,7 +103,16 @@ export default {
   text-align: center;
   .til {
     height: 6vh;
+    width: 60vw;
+    display: inline-block;
     padding-top: 2vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    span {
+      font-size: 14px;
+      padding-left: 10px;
+    }
   }
   .lyric {
     height: 34vh;
