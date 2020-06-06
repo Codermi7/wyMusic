@@ -17,7 +17,7 @@
                    closeable
                    close-icon="close"
         >
-            <h3>当前播放</h3>
+            <h3>当前播放({{getMusicsLen}})</h3>
             <div class="music-list">
                 <div v-for="(item,index) in Musics" :class='{active:index==currentIndex,"item-info":true}' :key="item.id">
                     <div class="list-left" @click="toPlay(index)">
@@ -216,6 +216,9 @@
             },
             getCurMusic() {
                 return this.curMusic
+            },
+            getMusicsLen(){
+                return this.Musics.length
             }
         },
         watch: {
