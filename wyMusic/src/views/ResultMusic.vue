@@ -31,14 +31,8 @@
                 let res = await searchMusic(keywords)
                 if(res.code==200){
                     for(let item of res.result.songs){
-                        if(this.MusicList.length<10){
                             let resItem = new SearchList(item)
                             this.MusicList.push(resItem)
-                        }
-                        else {
-
-                            return
-                        }
                     }
                 }
             },
