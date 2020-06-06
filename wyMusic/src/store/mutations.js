@@ -3,5 +3,8 @@ export default {
     Statechange(state,payload){
         state.isStop = payload ? payload : !state.isStop
     },
+    isShowChange(state,payload){
+        state.isShow = payload ? payload : !state.isShow
+    }
 
 }

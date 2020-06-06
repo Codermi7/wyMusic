@@ -44,6 +44,10 @@
                 }
             },
             toSearchResult(index){
+                if(this.$store.state.isShow){
+                    this.$store.commit('isShowChange')
+                    return
+                }
                 let keywords = this.hotMusics[index].word
                 this.$router.push({path:'/home/search/result',query:{keywords}})
             }

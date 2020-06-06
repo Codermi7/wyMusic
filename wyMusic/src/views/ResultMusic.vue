@@ -48,6 +48,10 @@
                 this._searchMusic(this.keywords)
             },
             play(index){
+                if(this.$store.state.isShow){
+                    this.$store.commit('isShowChange')
+                    return
+                }
                 this.$EventBus.$emit('updatePlay',this.MusicList[index])
             }
         },
@@ -67,14 +71,20 @@
                 margin-bottom: 10px;
             }
             .item {
-                padding: 5px;
+                padding: 10px 20px 5px 5px;
                 .m-name {
                     font-size: 18px;
-                    color: #336699;
+                    color: #0000cc;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .m-author {
                     font-size: 14px;
                     color: #909090;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 

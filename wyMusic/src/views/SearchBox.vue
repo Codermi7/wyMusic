@@ -3,13 +3,12 @@
         <div class="nav-head">
             <span class="iconfont icon-fanhui4" @click="goBack"></span>
             <input type="text" v-model="keywords"
-                   @blur="_blur"
                    @focus="_focus"
                    @keyup="handleSearch"
                    placeholder="搜索"
             />
         </div>
-        <div class="popup" ref="popup" v-show="wordsList.length!=0 && isShow&& keywords!=''">
+        <div class="popup" ref="popup" v-show="wordsList.length!=0 && $store.state.isShow&& keywords!=''">
             <div v-for="(item,index) in wordsList"
                  :key="index"
                  class="pop-item"
@@ -66,16 +65,9 @@
                     }
                 },500)
             },
-            _blur() {
-                if(this.keywords){
-                    return
-               }
-               else {
-                   this.isShow = false
-               }
-            },
             _focus() {
                 this.isShow = true
+                this.$store.state.isShow = true
 
             },
             toSearchResult(index) {
