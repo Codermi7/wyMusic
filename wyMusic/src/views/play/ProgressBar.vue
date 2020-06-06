@@ -59,7 +59,6 @@
             },
             handleMove(){
                 this.flag = false
-                console.log(this.$refs.progress.value)
             },
         },
         computed: {
@@ -71,7 +70,6 @@
             'currentTime':function () {
                 if(this.flag){
                     this.percent = (this.currentTime/this.totalTime)*100
-                    console.log('66')
                 }
 
             }

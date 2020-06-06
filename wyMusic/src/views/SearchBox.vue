@@ -68,7 +68,6 @@
             },
             _blur() {
                 if(this.keywords){
-                   console.log(this.keywords)
                }
                else {
                    this.isShow = false

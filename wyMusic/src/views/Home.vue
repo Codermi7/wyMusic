@@ -124,13 +124,11 @@
                 this.Musics = this.musicStore.getStore()
                 this.currentIndex = this.idStore.getStore()
                 if(!this.currentIndex){
-                    console.log('55')
                     this.currentIndex = 0
                     this.idStore.setStore(this.currentIndex)
                 }
                 if(!this.Musics){
                     this.Musics=[]
-                    console.log('request')
                     this._getFirstList().then(res=>{
                         this.curMusic = res[this.currentIndex]
                     })
@@ -167,7 +165,6 @@
                         flag = false
                     }
                 }
-                console.log(flag)
                 if(flag){
                     Music.name = info.name
                     Music.author = info.author
