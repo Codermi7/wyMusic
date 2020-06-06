@@ -28,7 +28,7 @@
         isStop:true,
         duration:200,
         isFirst:true,
-        // baseUrl:' https://music.163.com/song/media/outer/url?id=25794014.mp3'
+        // baseUrl:' https://music.163.com/song/media/outer/url?id=1449213110.mp3'
       };
     },
     props:["curMusic"],
@@ -70,7 +70,7 @@
         this.$emit('close')
       },
       joint(id){
-          return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'| this.curMusic.music
+          return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
       }
     },
     computed: {

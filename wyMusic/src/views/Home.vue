@@ -203,7 +203,6 @@
 
             },
             delMusic(index) {
-               console.log(this.Musics[index].name)
                 this.Musics.splice(index,1)
                 this.curMusic = this.Musics[this.currentIndex]
                 this.musicStore.setStore(this.Musics)
