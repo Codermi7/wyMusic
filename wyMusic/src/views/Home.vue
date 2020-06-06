@@ -160,27 +160,41 @@
             },
             async addMusic(info) {
                 let Music={}
-                let id = info.id
-                Music.name = info.name
-                Music.author = info.author
-                Music.id = id
-                const detail = await  getMusicDetail(Music.id)
-                Music.img = detail.songs[0].al.picUrl
-                Music.bg = bg
-                const url = await getSongUrl(Music.id)
-                Music.music = url.data[0].url
-                const lrc = await getLyric(Music.id)
-                Music.lyric = lrc.lrc.lyric
-                if(Music.music){
-                    console.log(Music)
-                    this.Musics.splice(++this.currentIndex,0,Music)
-                    this.musicStore.setStore(this.Musics)
-                    this.$refs.play.isStop = true
-                    this.$refs.play.change( this.$refs.play.isStop)
+                let id = info.id;
+                let flag=true;
+                for(let item of this.Musics){
+                    if(item.id==id){
+                        flag = false
+                    }
+                }
+                console.log(flag)
+                if(flag){
+                    Music.name = info.name
+                    Music.author = info.author
+                    Music.id = id
+                    const detail = await  getMusicDetail(Music.id)
+                    Music.img = detail.songs[0].al.picUrl
+                    Music.bg = bg
+                    const url = await getSongUrl(Music.id)
+                    Music.music = url.data[0].url
+                    const lrc = await getLyric(Music.id)
+                    Music.lyric = lrc.lrc.lyric
+                    if(Music.music){
+                        console.log(Music)
+                        this.Musics.splice(++this.currentIndex,0,Music)
+                        this.musicStore.setStore(this.Musics)
+                        this.$refs.play.isStop = true
+                        this.$refs.play.change( this.$refs.play.isStop)
+                        this.playShow = true
+                    }
+                    else {
+                        alert('暂时没有版权，很抱歉')
+                    }
                 }
                 else {
-                    alert('暂时没有版权，很抱歉')
+                    this.playShow = true
                 }
+
             }
         },
         computed: {
