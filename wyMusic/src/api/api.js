@@ -27,6 +27,9 @@ export function getHotDetail() {
 export function searchMusic(keywords) {
   return http.get('/search',{keywords,limit:20})
 }
+export function getMusicListInfo(id) {
+  return http.get('/playList/detail',{id})
+}
 export function localStore(name) {
   this.name = name
 }

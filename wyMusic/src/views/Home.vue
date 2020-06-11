@@ -31,7 +31,6 @@
         <router-view class="router"></router-view>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="getCurMusic"
-                       :img="getDefaultImg"
                        v-if="curMusic"
         >
         </main-play-bar>
@@ -44,8 +43,13 @@
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
     import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail} from "../api/api";
-    import bg from '@/assets/imgs/bg.jpg'
-    import img from '@/assets/imgs/avtx.jpg'
+    import mu7 from '../assets/imgs/bg.jpg'
+    import mu1 from '../assets/imgs/mu1.jpg'
+    import mu2 from '../assets/imgs/mu2.jpg'
+    import mu3 from '../assets/imgs/mu3.jpg'
+    import mu4 from '../assets/imgs/mu4.jpg'
+    import mu5 from '../assets/imgs/mu5.jpg'
+    import mu6 from '../assets/imgs/mu6.jpg'
     export default {
         name: "Home",
         components: {
@@ -58,10 +62,12 @@
               PopShow:false,
               Musics:null,
               currentIndex:null,
-              curMusic:[],
+              curMusic:{},
               musicStore:null,
               idStore:null,
-              enter:true
+              enter:true,
+              imgNum:0,
+              bgimg:[mu1,mu2,mu3,mu4,mu5,mu6,mu7]
           }
         },
         created() {
@@ -72,6 +78,7 @@
               this.PopShow = true
             })
             this.$EventBus.$on('next',()=>{
+                console.log('next')
                 this.currentIndex = this.currentIndex + 1 >= this.Musics.length ? 0 : this.currentIndex + 1
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
@@ -82,7 +89,11 @@
                 this.$refs.play.change( this.$refs.play.isStop)
             })
             this.$EventBus.$on('updatePlay',(res)=>{
+                console.log(res)
                 this.addMusic(res)
+            })
+            this.$EventBus.$on('addAll',()=>{
+                this.$toast('功能暂未开放!')
             })
 
         },
@@ -98,7 +109,8 @@
                        Music.author = item.ar[0].name
                        Music.id = item.id
                        Music.img = item.al.picUrl
-                       Music.bg = bg
+                       Music.bg = this.bgimg[this.imgNum%7]
+                       this.imgNum++;
                        const url = await getSongUrl(Music.id)
                            if(url.code==200){
                                Music.music = url.data[0].url
@@ -132,11 +144,11 @@
                 }
                 else {
                     this.curMusic = this.Musics[this.currentIndex]
+                    this.imgNum = this.Musics.length-1
                 }
                 this.enter = false
             },
             goToPlay() {
-                // this.$router.push('/play')
                 this.playShow = true
             },
             close() {
@@ -153,26 +165,35 @@
                 this.$refs.play.isStop = true
                 this.$refs.play.change( this.$refs.play.isStop)
             },
+            //添加单个歌曲
             async addMusic(info) {
                 let Music={}
                 let id = info.id;
-                let flag=true;
+                let flag=false;
+                //得到id 遍历是否已存在列表
                 for(let item of this.Musics){
                     if(item.id==id){
-                        flag = false
+                        flag = true
                     }
                 }
-                if(flag){
+                //不存在 获取音乐信息
+                if(!flag){
                     Music.name = info.name
                     Music.author = info.author
                     Music.id = id
-                    const detail = await  getMusicDetail(Music.id)
-                    Music.img = detail.songs[0].al.picUrl
-                    Music.bg = bg
-                    const url = await getSongUrl(Music.id)
-                    Music.music = url.data[0].url
-                    const lrc = await getLyric(Music.id)
-                    Music.lyric = lrc.lrc.lyric
+                    try {
+                        const detail = await  getMusicDetail(Music.id)
+                        Music.img = detail.songs[0].al.picUrl
+                        Music.bg = this.bgimg[this.imgNum%7]
+                        this.imgNum++
+                        const url = await getSongUrl(Music.id)
+                        Music.music = url.data[0].url
+                        const lrc = await getLyric(Music.id)
+                        Music.lyric = lrc.lrc.lyric
+                    }
+                    catch (e) {
+                        this.$toast('暂无歌词')
+                    }
                     if(Music.music){
                         this.Musics.splice(++this.currentIndex,0,Music)
                         this.musicStore.setStore(this.Musics)
@@ -181,15 +202,17 @@
                         this.playShow = true
                     }
                     else {
-                        alert('暂时没有版权，很抱歉')
+                        this.$toast('《'+Music.name+'》暂时没有版权，很抱歉')
                     }
                 }
                 else {
+                    //如果当前音乐与添加的音乐相同则只让他播放并显示歌词页面
                     if(this.curMusic.id==id){
                         this.$refs.play.isStop = false
                         this.$refs.play.change( this.$refs.play.isStop)
                         this.playShow = true
                     }
+                    //否则找到那一首播放
                     else {
                         for(let i in this.Musics){
                             if(this.Musics[i].id==id){
@@ -202,30 +225,27 @@
                 }
 
             },
+            //移除歌曲
             delMusic(index) {
-
+               //列表删除当前选项
                 this.Musics.splice(index,1)
+                //点击歌曲为当前正在播放
                 if(index==this.currentIndex){
+                    //如果当前是最后一首歌，播放序号设为0
                     if(this.currentIndex==this.Musics.length){
                         this.currentIndex = 0
-                        this.curMusic = this.Musics[this.currentIndex]
                     }
-                    else {
-                        this.curMusic = this.Musics[this.currentIndex]
-                    }
+                    this.curMusic = this.Musics[this.currentIndex]
                     this.toPlay(this.currentIndex)
                 }
                 if(index<this.currentIndex){
                     this.currentIndex--
                 }
                 this.musicStore.setStore(this.Musics)
-            }
+            },
         },
         computed: {
             ...mapGetters(['getStatus']),
-            getDefaultImg() {
-                return img
-            },
             getCurMusic() {
                 return this.curMusic
             },
@@ -239,8 +259,7 @@
                     this.idStore.setStore(this.currentIndex)
                     this.curMusic = this.Musics[this.currentIndex]
                 }
-
-            }
+            },
         }
     }
 </script>

@@ -2,10 +2,10 @@
     <div class="music-store">
         <h3>歌单精选</h3>
         <div class="music-list">
-            <div class="list-item" v-for="item in playLists" :key="item.id">
+            <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
                 <div class="logo">
                     <img :src="item.img">
-                    <p></p>
+                    <p class="count"><span class="iconfont icon-tianchongxing-"></span>{{item.playCount/10000>10?(item.playCount/10000).toFixed(0)+'万':item.playCount}}</p>
                 </div>
                 <p>{{item.name.substring(0,10)+'...'}}</p>
             </div>
@@ -39,7 +39,13 @@
                        this.playLists.push(cate)
                    }
                }
+            },
+            toMusicList(index){
+               console.log(this.playLists[index])
+                this.$router.push({path:'/home/list',query:{option:this.playLists[index]}})
             }
+        },
+        computed: {
         }
     }
 </script>
@@ -56,12 +62,22 @@
                 .logo {
                     position: relative;
                     height: 20vw;
-                    p {
+                    .count {
                         position: absolute;
-                        height: 20%;
-                        background: #b3b0b0;
+                        height: 25%;
+                        background: rgba(0,0,0,.7);
                         bottom: 0;
                         left: 0;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+                        padding: 0 5px;
+                        box-sizing: border-box;
+                        color: #fff;
+                        .iconfont {
+                            font-size: 12px;
+                        }
                     }
                 }
                 img {

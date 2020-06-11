@@ -103,6 +103,7 @@
     height: 100vh;
     background-size: auto 100%;
     background-position: center center;
+    background-repeat: no-repeat;
     transform-origin: center top;
     &::before {
       content: " ";

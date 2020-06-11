@@ -42,6 +42,10 @@ const routes = [
           }
         ]
 
+      },
+      {
+        path:'list',
+        component:()=>import('../views/MusicPlayList')
       }
     ]
   },

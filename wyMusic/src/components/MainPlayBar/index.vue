@@ -1,5 +1,5 @@
 <template>
-    <div class="main-play" >
+    <div class="main-play">
         <div class="left" @click="handleClick" >
             <img :src="curMusic.img"
                  :class="{stop:$store.state.isStop}"
@@ -19,7 +19,7 @@
 <script>
     export default {
         name: "index",
-        props: ["curMusic","img"],
+        props: ["curMusic"],
         mounted() {
             let winHeight = $(window).height();
             $(window).resize(function() {
@@ -64,6 +64,7 @@
             }
             img {
                 height: 6vh;
+                width: 6vh;
                 border-radius: 50%;
                 margin:0 20px 0 10px;
                 animation: rotateMove 4s linear infinite;

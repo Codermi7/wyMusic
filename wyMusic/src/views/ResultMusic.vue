@@ -4,8 +4,11 @@
         <div class="wrap">
             <h3>单曲</h3>
             <div v-for="(item,index) in MusicList" :key="item.id" class="item" @click="play(index)">
-                <p class="m-name">{{item.name}}</p>
-                <p class="m-author">{{item.author}} - {{item.album}}</p>
+                <div class="info">
+                    <p class="m-name">{{item.name}}</p>
+                    <p class="m-author">{{item.author}} - {{item.album}}</p>
+                </div>
+                <span class="iconfont icon-gengduo"></span>
             </div>
         </div>
     </div>
@@ -66,19 +69,29 @@
             }
             .item {
                 padding: 10px 20px 5px 5px;
-                .m-name {
-                    font-size: 18px;
-                    color: #0000cc;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                display: flex;
+                justify-content: space-between;
+                .info {
+                    width: 80%;
+                    .m-name {
+                        font-size: 18px;
+                        color: #444;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .m-author {
+                        font-size: 14px;
+                        color: #909090;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
                 }
-                .m-author {
-                    font-size: 14px;
-                    color: #909090;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+
+                .iconfont {
+                    flex: 2;
+                    text-align: right;
                 }
             }
 

@@ -59,7 +59,7 @@ export default {
     img {
       position: absolute;
       width: 65%;
-      height: auto;
+      height: 65%;
       border-radius: 50%;
       left: 50%;
       top: 50%;
