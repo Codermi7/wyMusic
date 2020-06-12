@@ -235,11 +235,14 @@
                     color: #999;
                 }
                 .item-right {
-                    flex: 6;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                    flex-wrap: nowrap;
+                    width: 60%;
                     color: #444444;
+                    .item-author ,.item-title{
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
                     .item-author {
                         font-size: 12px;
                         color:#b3b0b0;

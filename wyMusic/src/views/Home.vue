@@ -310,7 +310,6 @@
             border-radius: 15px;
             padding: 15px;
             box-sizing: border-box;
-            z-index: 99999;
             overflow: hidden;
             .music-list {
                 height: 100%-10px;

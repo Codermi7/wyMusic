@@ -17,7 +17,7 @@ export function getFirstList() {
 }
 //获取歌单精选
 export function getTopPlayList() {
-  return http.get('/top/playlist',{limit:4})
+  return http.get('/top/playlist',{limit:8})
 }
 //获取热门搜索
 export function getHotDetail() {
@@ -30,8 +30,14 @@ export function searchMusic(keywords) {
 export function getMusicListInfo(id) {
   return http.get('/playList/detail',{id})
 }
+//存本地方法
 export function localStore(name) {
   this.name = name
+}
+
+//热门mv
+export function getMvHot() {
+  return http.get('/top/mv',{limit:8})
 }
 localStore.prototype = {
   getStore:function () {

@@ -1,5 +1,6 @@
 <template>
     <div class="music-store">
+        <music-swiper :Musics="getMusics"></music-swiper>
         <h3>歌单精选</h3>
         <div class="music-list">
             <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
@@ -14,16 +15,23 @@
 </template>
 
 <script>
-    import {getTopPlayList} from "../api/api";
+    import {getTopPlayList,getMvHot} from "../api/api";
+    import {MusicSwiper} from "../components";
+
     export default {
         name: "MusicStore",
         data() {
           return {
-              playLists:[]
+              playLists:[],
+              Musics:[]
           }
+        },
+        components: {
+          MusicSwiper
         },
         created() {
             this._getTopPlayList()
+            this._getMvHot()
         },
         methods: {
            async _getTopPlayList() {
@@ -43,9 +51,39 @@
             toMusicList(index){
                console.log(this.playLists[index])
                 this.$router.push({path:'/home/list',query:{option:this.playLists[index]}})
+            },
+            _getMvHot() {
+               this.Musics=[]
+               getMvHot().then(res=>{
+                   if(res.code==200){
+                       let arr = []
+                       let data = res.data
+                       for(let i in data){
+                           if(i>1){
+                               let item =data[i]
+                               let obj = {}
+                               obj.id = item.id
+                               obj.name = item.name
+                               obj.src = item.cover
+                               obj.author = item.artistName
+                               arr.push(obj)
+                           }
+
+                       }
+                       this.Musics=[...arr]
+                   }
+               })
+
             }
+
         },
         computed: {
+            getMusics() {
+                if(this.Musics.length){
+                    return this.Musics
+                }
+                return []
+            }
         }
     }
 </script>
@@ -53,12 +91,13 @@
 <style scoped lang="less">
     .music-store {
         .music-list {
-
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-around;
             .list-item {
                 text-align: center;
-                padding: 5px 10px 0;
+                width: 20vw;
+                padding: 5px 8px 0;
                 .logo {
                     position: relative;
                     height: 20vw;
