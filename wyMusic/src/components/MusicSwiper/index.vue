@@ -22,22 +22,34 @@
                 }
             }
         },
-        updated() {
-            console.log('updated')
-            new Swiper ('#swiper',{
-                loop:true,
-                autoplay:true,
-                autoPlay: {
-                    disableOnInteraction: false
-                },
-                effect : 'slide',
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-                observe:true,
-                observeParents:false
-            })
-        }
+        data() {
+          return {
+              swiper:''
+          }
+        },
+        methods: {
+            getSwiper() {
+                //数据加载完才创建swiper，防止滚动失效
+                this.$nextTick(()=>{
+                    this.swiper =   new Swiper ('#swiper',{
+                        loop:true,
+                        autoplay:true,
+                        autoPlay: {
+                            disableOnInteraction: false
+                        },
+                        effect : 'slide',
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
+                        observe:true,
+                        observeParents:false
+                    })
+                })
+
+            }
+
+        },
+
     }
 </script>
 

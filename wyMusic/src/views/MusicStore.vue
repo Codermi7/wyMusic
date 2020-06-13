@@ -1,12 +1,12 @@
 <template>
     <div class="music-store">
-        <music-swiper :Musics="getMusics"></music-swiper>
+        <music-swiper :Musics="getMusics" ref="swiper"></music-swiper>
         <h3>歌单精选</h3>
         <div class="music-list">
             <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
                 <div class="logo">
                     <img :src="item.img">
-                    <p class="count"><span class="iconfont icon-tianchongxing-"></span>{{item.playCount/10000>10?(item.playCount/10000).toFixed(0)+'万':item.playCount}}</p>
+                    <p class="count"><span class="iconfont icon-tianchongxing-"></span>{{getCount(index)}}</p>
                 </div>
                 <p>{{item.name.substring(0,10)+'...'}}</p>
             </div>
@@ -71,11 +71,21 @@
 
                        }
                        this.Musics=[...arr]
+                       this.$refs.swiper.getSwiper()
                    }
                })
 
+            },
+            getCount(index) {
+               let num = this.playLists[index].playCount
+                if(num>100000000){
+                    return (num/100000000).toFixed(0)+'亿'
+                }
+                else  if(num>100000){
+                    return  (num/10000).toFixed(0)+'万'
+                }
+                return num
             }
-
         },
         computed: {
             getMusics() {
