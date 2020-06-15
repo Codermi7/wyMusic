@@ -77,15 +77,16 @@
 
             },
             getCount(index) {
-               let num = this.playLists[index].playCount
-                if(num>100000000){
-                    return (num/100000000).toFixed(0)+'亿'
+                let count = this.playLists[index].playCount
+                if(count>100000000){
+                    return ((count/100000000).toFixed(0)+'亿')
                 }
-                else  if(num>100000){
-                    return  (num/10000).toFixed(0)+'万'
+                else if(count>100000) {
+                    return ((count/10000).toFixed(0)+'万')
                 }
-                return num
+                return count
             }
+
         },
         computed: {
             getMusics() {

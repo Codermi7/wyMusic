@@ -42,7 +42,7 @@
     import { MainPlayBar} from "../components";
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
-    import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail} from "../api/api";
+    import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail,checkMusic} from "../api/api";
     import mu7 from '../assets/imgs/bg.jpg'
     import mu1 from '../assets/imgs/mu1.jpg'
     import mu2 from '../assets/imgs/mu2.jpg'
@@ -58,15 +58,15 @@
         },
         data() {
           return {
-              playShow:false,
-              PopShow:false,
-              Musics:null,
-              currentIndex:null,
-              curMusic:{},
-              musicStore:null,
-              idStore:null,
-              enter:true,
-              imgNum:0,
+              playShow:false,//歌词也是否显示
+              PopShow:false,//显示音乐播放列表
+              Musics:null,//存储播放列表音乐
+              currentIndex:null,//当前播放index
+              curMusic:{},//当前播放音乐信息
+              musicStore:null,//音乐localstorage
+              idStore:null,//记录当前播放id的localstorage
+              enter:true,//是否第一次进入页面
+              imgNum:0,//请求没有背景图，自己添加假数据
               bgimg:[mu1,mu2,mu3,mu4,mu5,mu6,mu7]
           }
         },
@@ -74,26 +74,30 @@
            this._renderPage()
         },
         mounted() {
+            //显示播放列表
             this.$EventBus.$on('busPopup', ()=> {
               this.PopShow = true
             })
+            //下一首
             this.$EventBus.$on('next',()=>{
-                console.log('next')
                 this.currentIndex = this.currentIndex + 1 >= this.Musics.length ? 0 : this.currentIndex + 1
-                this.$refs.play.isStop = true
+                this.$refs.play.isStop = false
                 this.$refs.play.change( this.$refs.play.isStop)
             })
+            //前一首
             this.$EventBus.$on('prev',()=>{
                 this.currentIndex = this.currentIndex - 1 < 0 ? this.Musics.length-1 : this.currentIndex - 1
-                this.$refs.play.isStop = true
+                this.$refs.play.isStop = false
                 this.$refs.play.change( this.$refs.play.isStop)
             })
+            //点击切换当前播放
             this.$EventBus.$on('updatePlay',(res)=>{
                 console.log(res)
                 this.addMusic(res)
             })
-            this.$EventBus.$on('addAll',()=>{
-                this.$toast('功能暂未开放!')
+            //全部播放
+            this.$EventBus.$on('addAll',(res)=>{
+                this.addAllMusic(res)
             })
 
         },
@@ -162,7 +166,7 @@
             },
             toPlay(index) {
                this.currentIndex = index
-                this.$refs.play.isStop = true
+                this.$refs.play.isStop = false
                 this.$refs.play.change( this.$refs.play.isStop)
             },
             //添加单个歌曲
@@ -221,9 +225,7 @@
                             }
                         }
                     }
-
                 }
-
             },
             //移除歌曲
             delMusic(index) {
@@ -236,13 +238,109 @@
                         this.currentIndex = 0
                     }
                     this.curMusic = this.Musics[this.currentIndex]
-                    this.toPlay(this.currentIndex)
+                    this.$refs.play.change( this.$refs.play.isStop)
                 }
                 if(index<this.currentIndex){
                     this.currentIndex--
                 }
                 this.musicStore.setStore(this.Musics)
             },
+            addAllMusic(res){
+               let k = true
+                res.forEach(item=>{
+                    let out = this.checkId(item.id)
+                    if(out){
+                        console.log('ok')
+                        checkMusic(item.id).then(res=>{
+                            if(res.message=='ok'){
+                                let obj = {}
+                                obj.author = item.author
+                                obj.name = item.name
+                                obj.id = item.id
+                                try {getMusicDetail(item.id).then(res=>{
+                                    if(res){
+                                        obj.img = res.songs[0].al.picUrl
+                                        obj.bg = this.bgimg[this.imgNum%7]
+                                        this.imgNum++
+                                        return getSongUrl(item.id)
+                                    }
+                                }).then(res=>{
+                                    if(res){
+                                        obj.music = res.data[0].url
+                                        return getLyric(item.id)
+                                    }
+                                }).then(res=>{
+                                    if(res){
+                                        obj.lyric = ''
+                                        if(res.lrc.lyric){
+                                            obj.lyric = res.lrc.lyric
+                                        }
+                                        if(obj.music){
+                                           if(k){
+                                               this.Musics.splice(++this.currentIndex,0,obj)
+                                               this.musicStore.setStore(this.Musics)
+                                               this.$refs.play.isStop = false
+                                               this.$refs.play.change( this.$refs.play.isStop)
+                                               this.playShow = true
+                                               k = false
+                                           }
+                                           else {
+                                               this.Musics.splice(this.currentIndex,0,obj)
+                                               this.musicStore.setStore(this.Musics)
+                                               console.log('加载。。。。')
+                                           }
+
+                                        }
+                                    }
+                                }) }
+                                catch (e) {
+                                    return false
+                                }
+                            }
+                            else {
+                                this.$toast("<"+item.name+">暂无版权")
+                            }
+                        })
+                    }
+                    else {
+                        this.$refs.play.isStop = false
+                        this.$refs.play.change( this.$refs.play.isStop)
+                        this.playShow = true
+                    }
+                })
+            },
+            checkId(id) {
+               let k = true
+               this.Musics.forEach(item=>{
+                 if(item.id == id){
+                     k = false
+                 }
+               })
+                return k
+
+            },
+            // getMusicInfo(id){
+            //    let obj={};
+            //    getMusicDetail(id).then(res=>{
+            //        if(res){
+            //            obj.img = res.songs[0].al.picUrl
+            //            obj.bg = this.bgimg[this.imgNum%7]
+            //            this.imgNum++
+            //            return getSongUrl(id)
+            //        }
+            //    }).then(res=>{
+            //        if(res){
+            //            obj.music = res.data[0].url
+            //            return getLyric(id)
+            //        }
+            //
+            //    }).then(res=>{
+            //        if(res){
+            //            obj.lyric = res.lrc.lyric
+            //            return true
+            //        }
+            //    })
+            // }
         },
         computed: {
             ...mapGetters(['getStatus']),

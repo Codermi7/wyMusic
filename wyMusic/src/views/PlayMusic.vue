@@ -88,7 +88,7 @@
           this.currentTime = 0
           if(!this.isFirst){
             this.$nextTick(()=>{
-              this.isStop = !this.isStop
+              // this.isStop = !this.isStop
               this.change(this.isStop)
             })
           }

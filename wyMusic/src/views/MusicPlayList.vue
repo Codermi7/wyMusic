@@ -95,6 +95,7 @@
             },
             addAll(data) {
                 this.$EventBus.$emit('addAll',data)
+
             }
         },
         computed: {
