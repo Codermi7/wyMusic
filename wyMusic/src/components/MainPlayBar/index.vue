@@ -45,7 +45,7 @@
 <style scoped lang="less">
     .main-play {
         border-top: 1px solid #f2f2f2;
-        position: fixed;
+        position: absolute;
         bottom: 0;
         display: flex;
         width: 100%;

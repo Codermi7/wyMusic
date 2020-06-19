@@ -105,6 +105,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     transform-origin: center top;
+    background-color: #000;
     &::before {
       content: " ";
       position: absolute;

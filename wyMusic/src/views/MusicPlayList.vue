@@ -131,9 +131,9 @@
         right: 0;
         background-color: #fff;
         height: 92vh;
-
         background-repeat: no-repeat;
         background-position: center;
+        background-size: cover;
         box-sizing: border-box;
         .nav-head {
             color: #fff;

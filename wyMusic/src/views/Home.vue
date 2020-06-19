@@ -28,7 +28,9 @@
                 </div>
             </div>
         </van-popup>
-        <router-view class="router"></router-view>
+        <transition :name="transitionName">
+            <router-view class="router"></router-view>
+        </transition>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="getCurMusic"
                        v-if="curMusic"
@@ -48,7 +50,7 @@
     import mu2 from '../assets/imgs/mu2.jpg'
     import mu3 from '../assets/imgs/mu3.jpg'
     import mu4 from '../assets/imgs/mu4.jpg'
-    import mu5 from '../assets/imgs/mu5.jpg'
+    import mu5 from '../assets/imgs/mu5.jpeg'
     import mu6 from '../assets/imgs/mu6.jpg'
     export default {
         name: "Home",
@@ -67,7 +69,8 @@
               idStore:null,//记录当前播放id的localstorage
               enter:true,//是否第一次进入页面
               imgNum:0,//请求没有背景图，自己添加假数据
-              bgimg:[mu1,mu2,mu3,mu4,mu5,mu6,mu7]
+              bgimg:[mu1,mu2,mu3,mu4,mu5,mu6,mu7],
+              transitionName:'slide-left'
           }
         },
         created() {
@@ -92,7 +95,6 @@
             })
             //点击切换当前播放
             this.$EventBus.$on('updatePlay',(res)=>{
-                console.log(res)
                 this.addMusic(res)
             })
             //全部播放
@@ -201,7 +203,7 @@
                     if(Music.music){
                         this.Musics.splice(++this.currentIndex,0,Music)
                         this.musicStore.setStore(this.Musics)
-                        this.$refs.play.isStop = true
+                        this.$refs.play.isStop = false
                         this.$refs.play.change( this.$refs.play.isStop)
                         this.playShow = true
                     }
@@ -250,7 +252,6 @@
                 res.forEach(item=>{
                     let out = this.checkId(item.id)
                     if(out){
-                        console.log('ok')
                         checkMusic(item.id).then(res=>{
                             if(res.message=='ok'){
                                 let obj = {}
@@ -287,7 +288,6 @@
                                            else {
                                                this.Musics.splice(this.currentIndex,0,obj)
                                                this.musicStore.setStore(this.Musics)
-                                               console.log('加载。。。。')
                                            }
 
                                         }
@@ -319,28 +319,6 @@
                 return k
 
             },
-            // getMusicInfo(id){
-            //    let obj={};
-            //    getMusicDetail(id).then(res=>{
-            //        if(res){
-            //            obj.img = res.songs[0].al.picUrl
-            //            obj.bg = this.bgimg[this.imgNum%7]
-            //            this.imgNum++
-            //            return getSongUrl(id)
-            //        }
-            //    }).then(res=>{
-            //        if(res){
-            //            obj.music = res.data[0].url
-            //            return getLyric(id)
-            //        }
-            //
-            //    }).then(res=>{
-            //        if(res){
-            //            obj.lyric = res.lrc.lyric
-            //            return true
-            //        }
-            //    })
-            // }
         },
         computed: {
             ...mapGetters(['getStatus']),
@@ -358,6 +336,13 @@
                     this.curMusic = this.Musics[this.currentIndex]
                 }
             },
+            '$route' (to) {
+                if(to.path == '/home/store'){
+                    this.transitionName = 'slide-right';
+                }else{
+                    this.transitionName = 'slide-left';
+                }
+            }
         }
     }
 </script>
@@ -440,7 +425,7 @@
                     }
                 }
                 .list-right {
-                    flex: 3;
+                    flex: 1;
                     text-align: right;
                     padding-right: 10px;
                     color:#b3b0b0;
@@ -457,6 +442,18 @@
 
         }
         .router {
+            width: 100vw;
+            transition: all .5s cubic-bezier(.55,0,.1,1);
+        }
+        .slide-left-enter, .slide-right-leave-active {
+            opacity: 0;
+            -webkit-transform: translate(30px, 0);
+            transform: translate(30px, 0);
+        }
+        .slide-left-leave-active, .slide-right-enter {
+            opacity: 0;
+            -webkit-transform: translate(-30px, 0);
+            transform: translate(-30px, 0);
         }
     }
 

@@ -55,7 +55,7 @@ export default {
     z-index: 20;
     margin: auto;
     top: 15vw;
-    animation: rotateMove 4s linear infinite;
+    animation: rotateMove 4.2s linear infinite;
     img {
       position: absolute;
       width: 65%;
@@ -80,8 +80,8 @@ export default {
     animation-play-state: paused;
   }
   .btn {
-		position: absolute;
-		z-index: 120;
+    position: absolute;
+    z-index: 120;
     width: 15vw;
     height: 15vw;
     left: 50%;

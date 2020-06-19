@@ -39,6 +39,10 @@ export function localStore(name) {
 export function getMvHot() {
   return http.get('/top/mv',{limit:8})
 }
+//检测音乐是否可播放
+export  function checkMusic(id) {
+  return http.get('/check/music',{id})
+}
 localStore.prototype = {
   getStore:function () {
     return JSON.parse(window.localStorage.getItem(this.name))
