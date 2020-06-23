@@ -45,13 +45,6 @@
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
     import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail,checkMusic} from "../api/api";
-    import mu7 from '../assets/imgs/bg.jpg'
-    import mu1 from '../assets/imgs/mu1.jpg'
-    import mu2 from '../assets/imgs/mu2.jpg'
-    import mu3 from '../assets/imgs/mu3.jpg'
-    import mu4 from '../assets/imgs/mu4.jpg'
-    import mu5 from '../assets/imgs/mu5.jpeg'
-    import mu6 from '../assets/imgs/mu6.jpg'
     export default {
         name: "Home",
         components: {
@@ -68,8 +61,6 @@
               musicStore:null,//音乐localstorage
               idStore:null,//记录当前播放id的localstorage
               enter:true,//是否第一次进入页面
-              imgNum:0,//请求没有背景图，自己添加假数据
-              bgimg:[mu1,mu2,mu3,mu4,mu5,mu6,mu7],
               transitionName:'slide-left'
           }
         },
@@ -115,14 +106,20 @@
                        Music.author = item.ar[0].name
                        Music.id = item.id
                        Music.img = item.al.picUrl
-                       Music.bg = this.bgimg[this.imgNum%7]
-                       this.imgNum++;
                        const url = await getSongUrl(Music.id)
-                           if(url.code==200){
-                               Music.music = url.data[0].url
+                       if(url.code==200){
+                           Music.music = url.data[0].url
+                       }
+                       try {
+                           const lrc = await getLyric(Music.id)
+                           if(lrc.lrc){
+                               Music.lyric = lrc.lrc.lyric
+                           }else {
+                               Music.lyric = ''
                            }
-                       const lrc = await getLyric(Music.id)
-                       Music.lyric = lrc.lrc.lyric
+                       }catch (e) {
+                           return
+                       }
                        if(Music.music){
                            array.push(Music)
                        }
@@ -150,7 +147,6 @@
                 }
                 else {
                     this.curMusic = this.Musics[this.currentIndex]
-                    this.imgNum = this.Musics.length-1
                 }
                 this.enter = false
             },
@@ -190,8 +186,6 @@
                     try {
                         const detail = await  getMusicDetail(Music.id)
                         Music.img = detail.songs[0].al.picUrl
-                        Music.bg = this.bgimg[this.imgNum%7]
-                        this.imgNum++
                         const url = await getSongUrl(Music.id)
                         Music.music = url.data[0].url
                         const lrc = await getLyric(Music.id)
@@ -261,8 +255,6 @@
                                 try {getMusicDetail(item.id).then(res=>{
                                     if(res){
                                         obj.img = res.songs[0].al.picUrl
-                                        obj.bg = this.bgimg[this.imgNum%7]
-                                        this.imgNum++
                                         return getSongUrl(item.id)
                                     }
                                 }).then(res=>{
@@ -273,7 +265,7 @@
                                 }).then(res=>{
                                     if(res){
                                         obj.lyric = ''
-                                        if(res.lrc.lyric){
+                                        if(res.lrc){
                                             obj.lyric = res.lrc.lyric
                                         }
                                         if(obj.music){

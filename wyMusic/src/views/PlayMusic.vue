@@ -1,7 +1,7 @@
 <template>
   <div
           class='play_box'
-          :style="{backgroundImage:`url(${curMusic.bg})`}"
+          :style="{backgroundImage:`url(${curMusic.img})`}"
   >
     <span class="iconfont icon-fanhui back" @click="goBack"></span>
     <Record :img='curMusic.img' @click="change" :isStop='isStop'></Record>
