@@ -70,7 +70,7 @@
         mounted() {
             //显示播放列表
             this.$EventBus.$on('busPopup', ()=> {
-              this.PopShow = true
+              this.ShowPopup()
             })
             //下一首
             this.$EventBus.$on('next',()=>{
@@ -93,6 +93,13 @@
                 this.addAllMusic(res)
             })
 
+        },
+        beforeDestroy() {
+            this.$EventBus.$off('busPopup')
+            this.$EventBus.$off('next')
+            this.$EventBus.$off('prev')
+            this.$EventBus.$off('updatePlay')
+            this.$EventBus.$off('addAll')
         },
         methods: {
            async _getFirstList() {
@@ -341,6 +348,7 @@
 
 <style scoped lang="less">
     .home {
+        overflow: hidden;
         .search {
             height: 8vh;
             display: flex;

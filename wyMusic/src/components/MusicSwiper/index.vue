@@ -24,14 +24,13 @@
         },
         data() {
           return {
-              swiper:''
           }
         },
         methods: {
             getSwiper() {
                 //数据加载完才创建swiper，防止滚动失效
                 this.$nextTick(()=>{
-                    this.swiper =   new Swiper ('#swiper',{
+                    return new Swiper ('#swiper',{
                         loop:true,
                         autoplay:true,
                         autoPlay: {

@@ -69,6 +69,8 @@
             _focus() {
                 this.isShow = true
                 this.$store.state.isShow = true
+                let body = document.getElementsByClassName('search-box')
+                body.scrollTop = body.scrollHeight
 
             },
             toSearchResult(index) {
