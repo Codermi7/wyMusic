@@ -14,6 +14,7 @@
     <audio :src="getMusic" id="audio"  ref='audio'></audio>
     <ProgressBar :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
     <play-bar @stop="change" :isStop='isStop'></play-bar>
+
   </div>
 </template>
 <script>
@@ -37,6 +38,11 @@
     },
     props:["curMusic"],
     components: {Record,Lyric,PlayBar,ProgressBar},
+    mounted() {
+      // this.$nextTick(()=>{
+      //   this.getcode()
+      // })
+    },
     methods: {
       ...mapMutations(["Statechange"]),
       change(state){
@@ -75,7 +81,9 @@
       },
       joint(id){
           return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
-      }
+      },
+
+
     },
     computed: {
         getMusic() {
@@ -88,7 +96,6 @@
           this.currentTime = 0
           if(!this.isFirst){
             this.$nextTick(()=>{
-              // this.isStop = !this.isStop
               this.change(this.isStop)
             })
           }
@@ -113,7 +120,7 @@
       right: 0;
       bottom: 0;
       top: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.7);
     }
     .back {
       font-size: 30px;

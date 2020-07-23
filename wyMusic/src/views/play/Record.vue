@@ -4,32 +4,48 @@
       class="record"
       :class='{stop:isStop}'
     >
-      <img
-        :src="img"
-        alt=""
-
-      >
+        <img
+                id="imgs"
+                :src="img"
+                alt=""
+                crossorigin="anonymous"
+        >
       <div class="record_bg" @click='click'></div>
     </div>
-    <div class="btn" @click='click' v-show='isStop'></div>
+    <div class="btn" @click='click' v-show='isStop'>
+
+    </div>
   </div>
 </template>
 <script>
 // @ is an alias to /src
+import ColorThief from "colorthief";
 export default {
   name: "Record",
   props: ["img",'isStop'],
   data() {
     return {
-      stop: "stop"
+      stop: "stop",
+        colors:''
     };
   },
-  methods: {
+    mounted() {
+      this.imgColor()
+    },
+    methods: {
     click() {
-			this.$emit('click',!this.isStop)
-    }
+        this.$emit('click',!this.isStop)
+    },
+      imgColor() {
+          let colorthief = new ColorThief();
+          let domImg = document.querySelector('#imgs');
+          domImg.addEventListener('load', () => {
+              console.log('加载好了并取色', colorthief.getPalette(domImg, 2));//第二个参数可选(1~10)
+              this.colors = colorthief.getPalette(domImg)[0];
+              console.log(this.colors)
+          })
+      }
   },
-  components: {}
 };
 </script>
 <style lang="less">

@@ -33,7 +33,7 @@
         </transition>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="getCurMusic"
-                       v-if="curMusic"
+
         >
         </main-play-bar>
     </div>

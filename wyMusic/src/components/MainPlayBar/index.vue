@@ -1,12 +1,21 @@
 <template>
     <div class="main-play" v-show="hideshow">
-        <div class="left" @click="handleClick" >
-            <img :src="curMusic.img"
+        <div  v-if="curMusic!=undefined" class="left" @click="handleClick" >
+            <img  :src="curMusic.img"
                  :class="{stop:$store.state.isStop}"
             >
             <div>
                 <p class="music-title">{{curMusic.name}}</p>
                 <p class="music-author">{{curMusic.author}}</p>
+            </div>
+        </div>
+        <div  v-else class="left" @click="handleClick" >
+            <img  :src="axtx"
+                  :class="{stop:$store.state.isStop}"
+            >
+            <div>
+                <p class="music-title">正在加载中...</p>
+                <p class="music-author">正在加载中...</p>
             </div>
         </div>
         <div class="right">
@@ -17,6 +26,7 @@
 </template>
 
 <script>
+    import axtx from '../../assets/imgs/avtx.jpg'
     export default {
         name: "index",
         props: ["curMusic"],
@@ -24,7 +34,8 @@
             return {
                 docmHeight: document.documentElement.clientHeight ||document.body.clientHeight,
                 showHeight: document.documentElement.clientHeight ||document.body.clientHeight,
-                hideshow:true  //显示或者隐藏footer
+                hideshow:true,  //显示或者隐藏footer
+                axtx:axtx
             }
         },
         mounted() {
