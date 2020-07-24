@@ -17,7 +17,7 @@ export function getFirstList() {
 }
 //获取歌单精选
 export function getTopPlayList() {
-  return http.get('/top/playlist',{limit:8})
+  return http.get('/top/playlist',{limit:16})
 }
 //获取热门搜索
 export function getHotDetail() {

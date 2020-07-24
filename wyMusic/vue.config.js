@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 module.exports = {
+    lintOnSave: false,
     configureWebpack: {
         //支持jquery
         plugins: [

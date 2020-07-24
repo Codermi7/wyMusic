@@ -31,18 +31,21 @@
                         <span class="iconfont icon-bofang"></span>
                         <p>全部播放({{MusicList.length}})</p>
                     </div>
-                    <div v-for="(item,index) in MusicList"
-                         :key="item.id"
-                         class="item"
-                         @click="play(index)"
-                    >
-                        <span class="item-left">{{index+1}}</span>
-                        <div class="item-right">
-                            <p class="item-title">{{item.name}}</p>
-                            <p class="item-author">{{item.author}} - {{item.album}}</p>
+                    <van-skeleton :row="6" :loading="MusicList.length == 0">
+                        <div v-for="(item,index) in MusicList"
+                             :key="item.id"
+                             class="item"
+                             @click="play(index)"
+                        >
+                            <span class="item-left">{{index+1}}</span>
+                            <div class="item-right">
+                                <p class="item-title">{{item.name}}</p>
+                                <p class="item-author">{{item.author}} - {{item.album}}</p>
+                            </div>
+                            <span class="iconfont icon-gengduo"></span>
                         </div>
-                        <span class="iconfont icon-gengduo"></span>
-                    </div>
+                    </van-skeleton>
+
                 </div>
             </div>
 

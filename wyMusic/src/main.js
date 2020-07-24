@@ -6,6 +6,9 @@ import router from "./router";
 import store from "./store";
 import {Popup} from "vant";
 import { Toast } from "vant";
+import { Skeleton } from 'vant';
+
+Vue.use(Skeleton);
 
 Vue.prototype.$EventBus = new Vue()
 Vue.config.productionTip = false

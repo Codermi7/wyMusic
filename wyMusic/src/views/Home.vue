@@ -349,13 +349,14 @@
 <style scoped lang="less">
     .home {
         overflow: hidden;
+        /*background: #8cc5ff;*/
         .search {
             height: 8vh;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10;
-            background: #FF3300;
+            background: #8cc5ff;
             a {
                 width: 80vw;
                 height: 6vh;
@@ -366,6 +367,7 @@
                 text-decoration: unset;
                 color: #252525;
                 background: #fff;
+                box-shadow: 0 0 5px 1px pink;
             }
         }
         .hidden {

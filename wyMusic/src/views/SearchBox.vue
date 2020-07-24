@@ -18,7 +18,7 @@
                 <span class="iconfont icon-sousuo"></span>{{item}}
             </div>
         </div>
-        <router-view></router-view>
+        <router-view class="box"></router-view>
     </div>
 </template>
 
@@ -124,6 +124,7 @@
             align-items: center;
             text-align: center;
             height: 55px;
+            box-shadow: inset 0 0 5px 2px pink;
             .iconfont {
                 flex: 2;
                 font-size: 20px;
@@ -133,10 +134,12 @@
                 border: none;
                 margin-right: 10vw;
                 padding: 5px;
-                border-bottom: 1px solid #b3b0b0;
+                border-bottom: 1px solid pink;
                 &::-webkit-input-placeholder {
                     text-align: center;
+                    color: pink;
                 }
+
             }
         }
         .popup {

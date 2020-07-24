@@ -1,22 +1,25 @@
 <template>
     <div class="music-store">
-        <music-swiper :Musics="getMusics" ref="swiper"></music-swiper>
+<!--        <music-swiper :Musics="getMusics" ref="swiper"></music-swiper>-->
         <h3>歌单精选</h3>
-        <div class="music-list">
-            <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
-                <div class="logo">
-                    <img :src="item.img">
-                    <p class="count"><span class="iconfont icon-tianchongxing-"></span>{{getCount(index)}}</p>
+        <van-skeleton :row="3" :loading="isLoading">
+            <div class="music-list">
+                <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
+                    <div class="logo">
+                        <img :src="item.img">
+                        <p class="count"><span class="iconfont icon-tianchongxing-"></span>{{getCount(index)}}</p>
+                    </div>
+                    <p>{{item.name.substring(0,10)+'...'}}</p>
                 </div>
-                <p>{{item.name.substring(0,10)+'...'}}</p>
             </div>
-        </div>
+        </van-skeleton>
+
     </div>
 </template>
 
 <script>
     import {getTopPlayList,getMvHot} from "../api/api";
-    import {MusicSwiper} from "../components";
+    // import {MusicSwiper} from "../components";
 
     export default {
         name: "MusicStore",
@@ -27,11 +30,11 @@
           }
         },
         components: {
-          MusicSwiper
+          // MusicSwiper
         },
         created() {
             this._getTopPlayList()
-            this._getMvHot()
+            // this._getMvHot()
         },
         methods: {
            async _getTopPlayList() {
@@ -94,6 +97,12 @@
                     return this.Musics
                 }
                 return []
+            },
+            isLoading(){
+                if(this.playLists){
+                    return false
+                }
+                return  true
             }
         }
     }

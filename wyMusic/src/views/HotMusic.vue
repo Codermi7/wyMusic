@@ -1,7 +1,7 @@
 <template>
     <div class="hot-music">
         <h3>热搜榜</h3>
-        <div>
+        <div class="box">
             <div v-for="(item,index) in hotMusics"
                  :key="index"
                  :class="{'list-item':true,active:index<3}"

@@ -1,10 +1,11 @@
 <template>
   <div
           class='play_box'
-          :style="{backgroundImage:`url(${curMusic.img})`}"
+          :style="{ backgroundImage:`url(${curMusic.img})`}"
   >
+<!--    :style="{backgroundImage:`url(${curMusic.img})`}"-->
     <span class="iconfont icon-fanhui back" @click="goBack"></span>
-    <Record :img='curMusic.img' @click="change" :isStop='isStop'></Record>
+    <Record :img='curMusic.img' @click="change" :isStop='isStop' ref="avImg"></Record>
 
     <Lyric  :lyric='curMusic.lyric ? curMusic.lyric : ""'
             :title='curMusic.name'
@@ -120,7 +121,7 @@
       right: 0;
       bottom: 0;
       top: 0;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0,0,0,.5);
     }
     .back {
       font-size: 30px;
