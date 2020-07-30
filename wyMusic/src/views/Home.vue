@@ -29,7 +29,9 @@
             </div>
         </van-popup>
         <transition :name="transitionName">
-            <router-view class="router"></router-view>
+            <keep-alive exclude="MusicPlayList">
+                <router-view class="router"></router-view>
+            </keep-alive>
         </transition>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="getCurMusic"

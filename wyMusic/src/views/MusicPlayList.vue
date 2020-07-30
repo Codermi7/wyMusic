@@ -31,7 +31,7 @@
                         <span class="iconfont icon-bofang"></span>
                         <p>全部播放({{MusicList.length}})</p>
                     </div>
-                    <van-skeleton :row="6" :loading="MusicList.length == 0">
+                    <van-skeleton :row="6" :loading="loading">
                         <div v-for="(item,index) in MusicList"
                              :key="item.id"
                              class="item"
@@ -61,11 +61,11 @@
             return {
                 list:{},
                 author:null,
-                MusicList:[]
+                MusicList:[],
+                loading:true
             }
         },
         created() {
-            console.log(this.$route.query.option)
             this.list = this.$route.query.option
             this._getListInfo()
         },
@@ -76,6 +76,7 @@
             async _getListInfo() {
                 let res = await getMusicListInfo(this.list.id)
                 if(res.code==200){
+                    this.loading = false
                     let info = res.playlist.creator
                     let obj = {}
                     obj.avUrl = info.avatarUrl

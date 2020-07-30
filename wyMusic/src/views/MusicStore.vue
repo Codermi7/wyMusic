@@ -2,7 +2,7 @@
     <div class="music-store">
 <!--        <music-swiper :Musics="getMusics" ref="swiper"></music-swiper>-->
         <h3>歌单精选</h3>
-        <van-skeleton :row="3" :loading="isLoading">
+        <van-skeleton title avatar :row="6" :loading="isLoading">
             <div class="music-list">
                 <div class="list-item" v-for="(item,index) in playLists" :key="item.id" @click="toMusicList(index)">
                     <div class="logo">
@@ -26,7 +26,8 @@
         data() {
           return {
               playLists:[],
-              Musics:[]
+              Musics:[],
+              isLoading:true
           }
         },
         components: {
@@ -40,6 +41,7 @@
            async _getTopPlayList() {
                let res = await getTopPlayList()
                if(res.code==200){
+                   this.isLoading = false
                    let ar = res.playlists
                    for(let item of ar){
                        let cate = {}
@@ -52,7 +54,6 @@
                }
             },
             toMusicList(index){
-               console.log(this.playLists[index])
                 this.$router.push({path:'/home/list',query:{option:this.playLists[index]}})
             },
             _getMvHot() {
@@ -97,12 +98,6 @@
                     return this.Musics
                 }
                 return []
-            },
-            isLoading(){
-                if(this.playLists){
-                    return false
-                }
-                return  true
             }
         }
     }
