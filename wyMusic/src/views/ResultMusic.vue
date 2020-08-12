@@ -8,7 +8,7 @@
                     <p class="m-name">{{item.name}}</p>
                     <p class="m-author">{{item.author}} - {{item.album}}</p>
                 </div>
-                <span class="iconfont icon-gengduo"></span>
+                <span class="iconfont icon-yinle"></span>
             </div>
         </div>
     </div>

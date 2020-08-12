@@ -63,7 +63,8 @@
               musicStore:null,//音乐localstorage
               idStore:null,//记录当前播放id的localstorage
               enter:true,//是否第一次进入页面
-              transitionName:'slide-left'
+              transitionName:'slide-left',
+              currentTime:0
           }
         },
         created() {
@@ -144,7 +145,7 @@
                 this.idStore= new localStore('currentIndex')
                 this.Musics = this.musicStore.getStore()
                 this.currentIndex = this.idStore.getStore()
-                if(!this.currentIndex){
+                if(!this.currentIndex||this.currentIndex>this.Musics.length){
                     this.currentIndex = 0
                     this.idStore.setStore(this.currentIndex)
                 }

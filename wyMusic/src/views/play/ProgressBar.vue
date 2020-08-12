@@ -37,6 +37,9 @@
                 flag:true,
             }
         },
+        created() {
+            this.setPercent()
+        },
         methods: {
           ShowDate(value){
               let time = (value/100)*this.totalTime
@@ -64,7 +67,10 @@
           sendCurrentPro() {
               this.$emit('JumpProgress',this.$refs.progress.value)
               this.flag = true
-          }
+          },
+            setPercent() {
+              this.percent = (this.currentTime/this.totalTime)*100
+            }
 
         },
         computed: {
@@ -75,7 +81,7 @@
         watch: {
             'currentTime':function () {
                 if(this.flag){
-                    this.percent = (this.currentTime/this.totalTime)*100
+                    this.setPercent()
                 }
 
             }

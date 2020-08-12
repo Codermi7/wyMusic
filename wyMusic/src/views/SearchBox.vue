@@ -124,7 +124,7 @@
             align-items: center;
             text-align: center;
             height: 55px;
-            box-shadow: inset 0 0 5px 2px pink;
+            /*box-shadow: inset 0 0 5px 2px pink;*/
             .iconfont {
                 flex: 2;
                 font-size: 20px;

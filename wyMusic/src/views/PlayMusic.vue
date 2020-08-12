@@ -13,7 +13,7 @@
             :author="curMusic.author"
     ></Lyric>
     <audio :src="getMusic" id="audio"  ref='audio'></audio>
-    <ProgressBar :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
+    <ProgressBar v-if="duration" :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
     <play-bar @stop="change" :isStop='isStop'></play-bar>
 
   </div>
@@ -25,6 +25,8 @@
   import PlayBar from './play/PlayBar'
   import ProgressBar from "./play/ProgressBar";
   import {mapMutations} from 'vuex'
+  import {localStore} from "../api/api";
+
   export default {
     name: "PlayMusic",
     data() {
@@ -32,57 +34,86 @@
         currentTime:0,
         timer:null ,
         isStop:true,
-        duration:200,
+        duration:null,
         isFirst:true,
+        history:0,
         // baseUrl:' https://music.163.com/song/media/outer/url?id=1449213110.mp3'
       };
     },
     props:["curMusic"],
     components: {Record,Lyric,PlayBar,ProgressBar},
-    mounted() {
+    created() {
+        let timer = setInterval(()=>{
+            if(this.$refs.audio.duration){
+                let {duration} = this.$refs.audio
+                this.duration = duration
+                clearInterval(timer)
+            }
+        },500)
+        this.listenPageClose()
+    },
+      mounted() {
       // this.$nextTick(()=>{
       //   this.getcode()
       // })
+          this.history = new localStore('curTime')
+          if(this.isFirst){
+              let time = this.history.getStore()
+              if(time){
+                  this.currentTime = this.$refs.audio.currentTime = time
+              }
+          }
     },
-    methods: {
-      ...mapMutations(["Statechange"]),
-      change(state){
-        this.isStop = state;
-        this.Statechange(state)
-        if(this.isFirst){this.isFirst=false}
-        if(!state){
-          this.$refs.audio.play()
-          this.updateTime();
-        }else{
-          this.$refs.audio.pause();
-          clearInterval(this.timer)
-        }
+      beforeDestroy() {
+        this.clearListen()
       },
-      updateTime(){
-        let flag = true
-        this.timer = setInterval(() => {
-          if(this.$refs.audio.currentTime)
-            this.currentTime = this.$refs.audio.currentTime
-          if(this.$refs.audio.duration && flag){
-            this.duration = this.$refs.audio.duration
-            flag = false
+      methods: {
+          ...mapMutations(["Statechange"]),
+          change(state){
+            this.isStop = state;
+            this.Statechange(state)
+            if(this.isFirst){this.isFirst=false}
+            if(!state){
+              this.$refs.audio.play()
+              this.updateTime();
+            }else{
+              this.$refs.audio.pause();
+              clearInterval(this.timer)
+            }
+          },
+          updateTime(){
+            let flag = true
+            this.timer = setInterval(() => {
+              if(this.$refs.audio.currentTime)
+                this.currentTime = this.$refs.audio.currentTime
+              if(this.$refs.audio.duration && flag){
+                this.duration = this.$refs.audio.duration
+                flag = false
+              }
+              if(this.currentTime>=this.duration){
+                clearInterval(this.timer)
+                this.currentTime = 0
+                this.$EventBus.$emit('next')
+              }
+            }, 10);
+          },
+          JumpProgress(pre) {
+            this.$refs.audio.currentTime = this.duration*pre/100
+          },
+          goBack() {
+            this.$emit('close')
+          },
+          joint(id){
+              return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
+          },
+          listenPageClose() {
+              window.addEventListener('pagehide',()=>{
+                  this.history.setStore(this.currentTime)
+              })
+          },
+          clearListen(){
+              window.removeEventListener('pagehide')
           }
-          if(this.currentTime>=this.duration){
-            clearInterval(this.timer)
-            this.currentTime = 0
-            this.$EventBus.$emit('next')
-          }
-        }, 10);
-      },
-      JumpProgress(pre) {
-        this.$refs.audio.currentTime = this.duration*pre/100
-      },
-      goBack() {
-        this.$emit('close')
-      },
-      joint(id){
-          return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
-      },
 
 
     },
@@ -94,7 +125,8 @@
     watch: {
       'curMusic':function () {
         if(this.curMusic){
-          this.currentTime = 0
+            this.currentTime = 0
+            console.log('===')
           if(!this.isFirst){
             this.$nextTick(()=>{
               this.change(this.isStop)
