@@ -62,11 +62,12 @@
                 list:{},
                 author:null,
                 MusicList:[],
-                loading:true
+                loading:true,
+                curIsClick:{}
             }
         },
         created() {
-            this.list = this.$route.query.option
+            this.list = JSON.parse(this.$route.query.option)
             this._getListInfo()
         },
         methods: {
@@ -95,11 +96,16 @@
                 }
             },
             play(index) {
-                this.$EventBus.$emit('updatePlay',this.MusicList[index])
+                if(this.curIsClick[index]){
+                    if(Date.now() - this.curIsClick[index] < 500)return
+                    this.$EventBus.$emit('updatePlay',this.MusicList[index])
+                }else {
+                    this.curIsClick[index]=Date.now()
+                    this.$EventBus.$emit('updatePlay',this.MusicList[index])
+                }
             },
             addAll(data) {
                 this.$EventBus.$emit('addAll',data)
-
             }
         },
         computed: {

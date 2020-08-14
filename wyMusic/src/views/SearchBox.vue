@@ -18,7 +18,10 @@
                 <span class="iconfont icon-sousuo"></span>{{item}}
             </div>
         </div>
-        <router-view class="box"></router-view>
+        <keep-alive exclude="ResultMusic">
+            <router-view class="box"></router-view>
+        </keep-alive>
+
     </div>
 </template>
 

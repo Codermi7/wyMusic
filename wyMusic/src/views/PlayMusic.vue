@@ -126,7 +126,6 @@
       'curMusic':function () {
         if(this.curMusic){
             this.currentTime = 0
-            console.log('===')
           if(!this.isFirst){
             this.$nextTick(()=>{
               this.change(this.isStop)

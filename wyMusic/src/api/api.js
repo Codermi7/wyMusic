@@ -24,8 +24,9 @@ export function getHotDetail() {
   return http.get('/search/hot/detail')
 }
 //搜索
-export function searchMusic(keywords) {
-  return http.get('/search',{keywords,limit:20})
+export function searchMusic(keywords,limit) {
+  limit = limit || 20
+  return http.get('/search',{keywords,limit})
 }
 export function getMusicListInfo(id) {
   return http.get('/playList/detail',{id})

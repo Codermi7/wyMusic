@@ -47,6 +47,7 @@
     import { mapGetters } from "vuex";
     import PlayMusic from "./PlayMusic";
     import {getFirstList,localStore,getSongUrl,getLyric,getMusicDetail,checkMusic} from "../api/api";
+
     export default {
         name: "Home",
         components: {

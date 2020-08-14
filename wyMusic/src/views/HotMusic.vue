@@ -1,22 +1,24 @@
 <template>
     <div class="hot-music">
         <h3>热搜榜</h3>
-        <div class="box">
-            <div v-for="(item,index) in hotMusics"
-                 :key="index"
-                 :class="{'list-item':true,active:index<3}"
-                 @click="toSearchResult(index)"
-            >
-                <span class="info-left">{{index+1}}</span>
-                <div class="info-right">
-                    <div class="info-top">
-                        <div>{{item.word}}<img v-if="item.iconType!==0" :src="item.iconUrl"></div>
-                        <span>{{item.score}}</span>
+        <van-skeleton title :row="6" :loading="loading">
+            <div class="box">
+                <div v-for="(item,index) in hotMusics"
+                     :key="index"
+                     :class="{'list-item':true,active:index<3}"
+                     @click="toSearchResult(index)"
+                >
+                    <span class="info-left">{{index+1}}</span>
+                    <div class="info-right">
+                        <div class="info-top">
+                            <div>{{item.word}}<img v-if="item.iconType!==0" :src="item.iconUrl"></div>
+                            <span>{{item.score}}</span>
+                        </div>
+                        <p class="info-b">{{item.content}}</p>
                     </div>
-                    <p class="info-b">{{item.content}}</p>
                 </div>
             </div>
-        </div>
+        </van-skeleton>
     </div>
 </template>
 
@@ -27,7 +29,8 @@
         name: "HotMusic",
         data(){
             return{
-                hotMusics:[]
+                hotMusics:[],
+                loading:true
             }
         },
         created() {
@@ -37,6 +40,7 @@
             async _getHotDetail() {
                 let res = await getHotDetail()
                 if(res.code==200){
+                    this.loading = false
                     for(let item of res.data){
                         let arr = new HotMusic(item)
                         this.hotMusics.push(arr)
@@ -66,6 +70,9 @@
         padding: 5px 0;
         justify-content: center;
         align-items: center;
+        &:active {
+            background: #f2f2f2;
+        }
         &.active {
             .info-left{
                 color: red;

@@ -3,13 +3,15 @@
 
         <div class="wrap">
             <h3>单曲</h3>
-            <div v-for="(item,index) in MusicList" :key="item.id" class="item" @click="play(index)">
-                <div class="info">
-                    <p class="m-name">{{item.name}}</p>
-                    <p class="m-author">{{item.author}} - {{item.album}}</p>
+            <van-skeleton title :row="6" :loading="loading">
+                <div v-for="(item,index) in MusicList" :key="item.id" class="item" @click="play(index)">
+                    <div class="info">
+                        <p class="m-name">{{item.name}}</p>
+                        <p class="m-author">{{item.author}} - {{item.album}}</p>
+                    </div>
+                    <span class="iconfont icon-yinle"></span>
                 </div>
-                <span class="iconfont icon-yinle"></span>
-            </div>
+            </van-skeleton>
         </div>
     </div>
 </template>
@@ -23,7 +25,9 @@
         data() {
             return{
                 keywords:'',
-                MusicList:[]
+                MusicList:[],
+                loading:true,
+                curIsClick: {}
             }
         },
         created() {
@@ -33,6 +37,7 @@
             async _searchMusic(keywords){
                 let res = await searchMusic(keywords)
                 if(res.code==200){
+                    this.loading = false
                     for(let item of res.result.songs){
                             let resItem = new SearchList(item)
                             this.MusicList.push(resItem)
@@ -45,11 +50,22 @@
                 this._searchMusic(this.keywords)
             },
             play(index){
-                if(this.$store.state.isShow){
-                    this.$store.commit('isShowChange')
-                    return
+                if(this.curIsClick[index]){
+                    if(Date.now()-this.curIsClick[index]<500) return;
+                    if(this.$store.state.isShow){
+                        this.$store.commit('isShowChange')
+                        return
+                    }
+                    this.$EventBus.$emit('updatePlay',this.MusicList[index])
+                }else {
+                    this.curIsClick[index] = Date.now()
+                    if(this.$store.state.isShow){
+                        this.$store.commit('isShowChange')
+                        return
+                    }
+                    this.$EventBus.$emit('updatePlay',this.MusicList[index])
                 }
-                this.$EventBus.$emit('updatePlay',this.MusicList[index])
+
             }
         },
         watch: {
@@ -71,6 +87,9 @@
                 padding: 10px 20px 5px 5px;
                 display: flex;
                 justify-content: space-between;
+                &:active {
+                    background: #f2f2f2;
+                }
                 .info {
                     width: 80%;
                     .m-name {

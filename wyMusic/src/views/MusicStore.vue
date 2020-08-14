@@ -54,7 +54,8 @@
                }
             },
             toMusicList(index){
-                this.$router.push({path:'/home/list',query:{option:this.playLists[index]}})
+                this.$router.push({path:'/home/list',query:{option:JSON.stringify(this.playLists[index])}})
+                localStorage.setItem('playList',JSON.stringify(this.playLists[index]))
             },
             _getMvHot() {
                this.Musics=[]
