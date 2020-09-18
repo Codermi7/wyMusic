@@ -44,7 +44,7 @@
     components: {Record,Lyric,PlayBar,ProgressBar},
     created() {
         let timer = setInterval(()=>{
-            if(this.$refs.audio.duration){
+            if(this.$refs.audio){
                 let {duration} = this.$refs.audio
                 this.duration = duration
                 clearInterval(timer)
@@ -53,9 +53,6 @@
         this.listenPageClose()
     },
       mounted() {
-      // this.$nextTick(()=>{
-      //   this.getcode()
-      // })
           this.history = new localStore('curTime')
           if(this.isFirst){
               let time = this.history.getStore()
@@ -112,7 +109,7 @@
               })
           },
           clearListen(){
-              window.removeEventListener('pagehide')
+              window.removeEventListener('pagehide',null)
           }
 
 
