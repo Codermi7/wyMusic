@@ -113,6 +113,8 @@
             color: #fff;
             font-size: 12px;
             padding: 0 10px;
+            width: 50px;
+            box-sizing: border-box;
         }
         .base {
             width: 70vw;

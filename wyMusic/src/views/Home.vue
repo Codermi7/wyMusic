@@ -24,7 +24,7 @@
                         <span class="name">{{item.name}}</span>
                         <span class="author">{{item.author}}</span>
                     </div>
-                    <span class="iconfont icon-close list-right" @click="delMusic(index)"></span>
+                    <span class="iconfont icon-iconfontshanchu5 list-right" @click="delMusic(index)"></span>
                 </div>
             </div>
         </van-popup>
