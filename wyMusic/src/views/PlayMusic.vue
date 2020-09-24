@@ -140,7 +140,7 @@
       overflow: hidden;
       .gs_bg {
           z-index: -1;
-          filter: blur(40px);
+          filter: blur(70px);
           background-size: auto 100%;
           background-position: center center;
           background-repeat: no-repeat;
