@@ -1,21 +1,20 @@
 <template>
   <div
           class='play_box'
-          :style="{ backgroundImage:`url(${curMusic.img})`}"
   >
 <!--    :style="{backgroundImage:`url(${curMusic.img})`}"-->
-    <span class="iconfont icon-fanhui back" @click="goBack"></span>
-    <Record :img='curMusic.img' @click="change" :isStop='isStop' ref="avImg"></Record>
+      <div class="gs_bg"  :style="{ backgroundImage:`url(${curMusic.img})`}" ></div>
+          <span class="iconfont icon-fanhui back" @click="goBack"></span>
+          <Record :img='curMusic.img' @click="change" :isStop='isStop' ref="avImg"></Record>
 
-    <Lyric  :lyric='curMusic.lyric ? curMusic.lyric : ""'
-            :title='curMusic.name'
-            :currentTime='currentTime'
-            :author="curMusic.author"
-    ></Lyric>
-    <audio :src="getMusic" id="audio"  ref='audio'></audio>
-    <ProgressBar v-if="duration" :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
-    <play-bar @stop="change" :isStop='isStop'></play-bar>
-
+          <Lyric  :lyric='curMusic.lyric ? curMusic.lyric : ""'
+                  :title='curMusic.name'
+                  :currentTime='currentTime'
+                  :author="curMusic.author"
+          ></Lyric>
+          <audio :src="getMusic" id="audio"  ref='audio'></audio>
+          <ProgressBar v-if="duration" :current-time="currentTime" @JumpProgress="JumpProgress" :total-time="duration"></ProgressBar>
+          <play-bar @stop="change" :isStop='isStop'></play-bar>
   </div>
 </template>
 <script>
@@ -137,11 +136,22 @@
   .play_box {
     width: 100%;
     height: 100vh;
-    background-size: auto 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    transform-origin: center top;
-    background-color: #000;
+      background: #000000;
+      overflow: hidden;
+      .gs_bg {
+          z-index: -1;
+          filter: blur(40px);
+          background-size: auto 100%;
+          background-position: center center;
+          background-repeat: no-repeat;
+          transform-origin: center top;
+          background-color: #000000a3;
+          position: absolute;
+          width: 150vw;
+          left: -15vw;
+          top: -15vh;
+          height: 150vh;
+      }
     &::before {
       content: " ";
       position: absolute;
