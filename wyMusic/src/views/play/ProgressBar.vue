@@ -123,21 +123,28 @@
         /deep/.el-slider__runway {
             height: 1px;
             background: darkgray;
-            margin: 2px 0;
+            /*margin: 2px 0;*/
         }
         /deep/.el-slider__bar {
             height: 1px;
             background: azure;
         }
         /deep/.el-slider__button-wrapper {
-            height: 26px;
-            width: 5px;
-            top:-42px;
+            /*height: 26px;*/
+            /*width: 12px;*/
+            top:50%;
+            display: flex;
+            align-items: center;
+            transform: translate(0,-50%);
             .el-slider__button {
                 height: 5px;
                 width: 5px;
                 border: none;
             }
         }
+        /*/deep/ .el-slider__button-wrapper .el-tooltip, .el-slider__button-wrapper::after {*/
+        /*    vertical-align: unset;*/
+        /*    display: block;*/
+        /*}*/
     }
 </style>

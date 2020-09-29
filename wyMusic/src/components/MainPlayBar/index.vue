@@ -92,7 +92,7 @@
             flex: 6;
             align-items: center;
             p {
-                font-size: 12px;
+                font-size: 24px;
                 color: #999;
             }
             img {

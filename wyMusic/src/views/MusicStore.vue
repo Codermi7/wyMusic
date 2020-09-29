@@ -133,7 +133,7 @@
                         box-sizing: border-box;
                         color: #fff;
                         .iconfont {
-                            font-size: 12px;
+                            font-size: 24px;
                         }
                     }
                 }
@@ -142,7 +142,7 @@
                     height: 100%;
                 }
                 p {
-                    font-size: 12px;
+                    font-size: 24px;
                     text-align: left;
                     padding: 0;
                 }

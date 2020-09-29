@@ -1,19 +1,22 @@
 <template>
   <div class='lyric_box'>
     <div class="til">{{title}}<span>{{author}}</span></div>
-    <div class="lyric">
-      <div
-        class="lyric_list"
-        :style="{transform:`translateY(${moveY}px)`,transition:0.4+`s`}"
-      >
-        <p
-          v-for='(item,index) in lyricAry'
-          ref='p'
-          :key='index'
-          :class='{active:activeIndex == index}'
-        >{{item[1]}}</p>
+    <div style="height: 34vh">
+      <div class="lyric">
+        <div
+                class="lyric_list"
+                :style="{transform:`translateY(${moveY}px)`,transition:0.4+`s`}"
+        >
+          <p
+                  v-for='(item,index) in lyricAry'
+                  ref='p'
+                  :key='index'
+                  :class='{active:activeIndex == index}'
+          >{{item[1]}}</p>
+        </div>
       </div>
     </div>
+
 
   </div>
 </template>
@@ -26,6 +29,9 @@ export default {
     return {
       moveY: 0
     };
+  },
+  created() {
+    // console.log(document.documentElement.clientHeight*0.34/)
   },
   computed: {
     lyricAry() {
@@ -115,7 +121,7 @@ export default {
     }
   }
   .lyric {
-    height: 34vh;
+    height: 100%;
     color: #b3b0b0;
     overflow: hidden;
   }
@@ -124,6 +130,8 @@ export default {
   }
   p {
     padding: 16px;
+    height: 50px;
+    line-height: 50px;
   }
   p.active {
     color: #fff;
