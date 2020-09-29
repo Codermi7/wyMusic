@@ -111,9 +111,9 @@
         align-items: center;
         .style-time {
             color: #fff;
-            font-size: 12px;
-            padding: 0 10px;
-            width: 50px;
+            font-size: 24px;
+            padding: 0 20px;
+            width: 100px;
             box-sizing: border-box;
         }
         .base {
@@ -132,7 +132,7 @@
         /deep/.el-slider__button-wrapper {
             height: 26px;
             width: 5px;
-            top:-12px;
+            top:-42px;
             .el-slider__button {
                 height: 5px;
                 width: 5px;

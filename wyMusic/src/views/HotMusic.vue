@@ -62,12 +62,12 @@
 <style scoped lang="less">
 .hot-music {
     h3 {
-        font-size: 16px;
-        padding: 10px 20px;
+        font-size: 32px;
+        padding: 20px 40px;
     }
     .list-item {
         display: flex;
-        padding: 5px 0;
+        padding: 15px 0;
         justify-content: center;
         align-items: center;
         &:active {
@@ -102,18 +102,18 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                font-size: 18px;
+                font-size: 36px;
                 margin-bottom: 5px;
                 img {
-                    height: 14px;
-                    margin-left: 10px;
+                    height: 28px;
+                    margin-left: 20px;
                 }
                 span {
-                    font-size: 12px;
+                    font-size: 24px;
                 }
             }
             .info-b {
-                font-size: 12px;
+                font-size: 24px;
                 color:#b3b0b0;
             }
         }

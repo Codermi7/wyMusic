@@ -79,12 +79,13 @@
 <style scoped lang="less">
     .result-music {
         .wrap {
-            padding: 10px 20px;
+            padding: 20px 40px;
             h3 {
                 margin-bottom: 10px;
+                font-size: 40px;
             }
             .item {
-                padding: 10px 20px 5px 5px;
+                padding: 20px 40px 10px 10px;
                 display: flex;
                 justify-content: space-between;
                 &:active {
@@ -93,14 +94,14 @@
                 .info {
                     width: 80%;
                     .m-name {
-                        font-size: 18px;
+                        font-size: 36px;
                         color: #444;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                     }
                     .m-author {
-                        font-size: 14px;
+                        font-size: 28px;
                         color: #909090;
                         white-space: nowrap;
                         overflow: hidden;
@@ -109,8 +110,9 @@
                 }
 
                 .iconfont {
-                    flex: 2;
                     text-align: right;
+                    font-size: 24px;
+                    padding-top: 5px;
                 }
             }
 

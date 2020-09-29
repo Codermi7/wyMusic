@@ -162,7 +162,7 @@
       background-color: rgba(0,0,0,.5);
     }
     .back {
-      font-size: 30px;
+      font-size: 60px;
       position: absolute;
       top: 10vw;
       left: 8vw;

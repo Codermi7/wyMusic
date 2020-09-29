@@ -52,10 +52,10 @@ export default {
       align-items: center;
     span:nth-child(3){
       font-weight: 600;
-        font-size: 45px;
+        font-size: 90px;
     }
     span{
-      font-size: 40px;
+      font-size: 80px;
     }
   }
 </style>

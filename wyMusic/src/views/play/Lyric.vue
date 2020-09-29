@@ -4,7 +4,7 @@
     <div class="lyric">
       <div
         class="lyric_list"
-        :style="{transform:`translateY(${moveY}px)`,transition:0.3+`s`}"
+        :style="{transform:`translateY(${moveY}px)`,transition:0.4+`s`}"
       >
         <p
           v-for='(item,index) in lyricAry'
@@ -97,7 +97,7 @@ export default {
 .lyric_box {
   color: #fff;
   position: relative;
-  font-size: 17px;
+  font-size: 34px;
   height: 42vh;
   overflow: hidden;
   text-align: center;
@@ -110,7 +110,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     span {
-      font-size: 14px;
+      font-size: 28px;
       padding-left: 10px;
     }
   }
@@ -120,10 +120,10 @@ export default {
     overflow: hidden;
   }
   .lyric_list{
-    transition: all 0.2s;
+    /*transition: all 0.2s;*/
   }
   p {
-    padding: 8px;
+    padding: 16px;
   }
   p.active {
     color: #fff;

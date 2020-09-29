@@ -108,13 +108,12 @@
 
 <style scoped lang="less">
     body,html {
-       overflow: hidden;
+       /*overflow: hidden;*/
     }
     .search-box {
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        width: 100vw;
         background: #ffffff;
         height: 92vh;
         overflow: auto;
@@ -122,25 +121,30 @@
             position: sticky;
             background: #fff;
             top: 0;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            height: 55px;
+            height: 100px;
+            overflow: hidden;
             /*box-shadow: inset 0 0 5px 2px pink;*/
             .iconfont {
+                font-size: 40px;
                 flex: 2;
-                font-size: 20px;
             }
             input {
-                flex: 8;
                 border: none;
                 margin-right: 10vw;
+                flex: 8;
                 padding: 5px;
                 border-bottom: 1px solid pink;
+                box-sizing: border-box;
+                font-size: 40px;
                 &::-webkit-input-placeholder {
                     text-align: center;
                     color: pink;
+                    font-size: 36px;
                 }
 
             }
@@ -157,11 +161,13 @@
                 padding: 5px;
                 color: #999;
                 overflow: hidden;
+                font-size: 30px;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 span {
-                    padding: 0 10px;
+                    padding: 0 20px;
                     color: #c8c9cc;
+                    font-size: 30px;
                 }
             }
         }

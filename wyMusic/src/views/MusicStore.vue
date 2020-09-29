@@ -105,6 +105,9 @@
 
 <style scoped lang="less">
     .music-store {
+        h3 {
+            font-size: 40px;
+        }
         .music-list {
             display: flex;
             flex-wrap: wrap;

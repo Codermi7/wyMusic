@@ -147,39 +147,38 @@
         box-sizing: border-box;
         .nav-head {
             color: #fff;
-            height: 55px;
+            height: 90px;
             display: flex;
             align-items: center;
-            font-size: 20px;
-            padding: 0 20px;
+            font-size: 40px;
+            padding: 0 40px;
             position: fixed;
             top: 0;
             z-index: 10;
-            /*background: rgba(0,0,0,.4);*/
             span {
                 margin-right: 20px;
+                font-size: 40px;
             }
         }
         .banner {
             display: flex;
-            justify-content: space-between;
             color: #fff;
-            padding: 20px 20px;
+            padding: 40px 40px;
             height: 29vh;
             box-sizing: border-box;
             .the-img {
                 width: 40vw;
                 height: 40vw;
                 position: relative;
-                font-size: 14px;
+                font-size: 28px;
                 img {
                     height: 100%;
                     border-radius: 5px;
                 }
                 .play-count {
                     position: absolute;
-                    right: 4px;
-                    top: 2px;
+                    right: 16px;
+                    top: 4px;
                     .iconfont {
                         font-size: 10px;
                     }
@@ -187,21 +186,24 @@
             }
             .the-info {
                 color: #fff;
-                padding-left: 20px;
+                padding-left: 60px;
                 h3 {
-                    font-size: 18px;
+                    font-size: 36px;
                 }
                 .au-info,.txt {
                     height: 30px;
                     display: flex;
                     align-items: center;
-                    font-size: 12px;
-                    margin: 10px 0;
+                    font-size: 24px;
+                    margin: 20px 0;
                     color: #C6BEBB;
+                    span {
+                        font-size: 28px;
+                    }
                     img {
                         height: 100%;
                         border-radius: 50%;
-                        margin-right: 10px;
+                        margin-right: 20px;
                     }
                 }
                 .txt {
@@ -211,13 +213,13 @@
         }
         .music-list {
             background: #fff;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
             box-shadow: 0 0 5px #f2f2f2;
             height: calc(92vh - 55px - 29vh);
             overflow: auto;
             .player {
-                font-size: 24px;
+                font-size: 40px;
                 padding-left: 6vw;
                 display: flex;
                 height: 6vh;
@@ -225,8 +227,9 @@
                 top: 0;
                 align-items: center;
                 background: #fff;
+                /*box-shadow: 0 0 1px 1px rgba(0,0,0,.1);*/
                 .iconfont {
-                    font-size: 30px;
+                    font-size: 48px;
                     margin-right: 10px;
                 }
                 &:active {
@@ -239,7 +242,8 @@
             .item {
                 display: flex;
                 align-items: center;
-                padding: 10px 0;
+                padding: 15px 0;
+                font-size: 30px;
                 .item-left {
                     flex: 2;
                     text-align: center;

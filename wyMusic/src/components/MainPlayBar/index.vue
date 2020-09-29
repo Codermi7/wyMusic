@@ -85,7 +85,7 @@
         justify-content: space-between;
         align-items: center;
         height: 8vh;
-        padding: 0 10px;
+        padding: 0 20px;
         box-sizing: border-box;
         .left {
             display: flex;
@@ -114,11 +114,11 @@
 
         }
         .right {
-            flex: 4;
+            flex: 3;
             text-align: center;
             span {
-                font-size: 36px;
-                margin: 0 10px;
+                font-size: 60px;
+                margin: 0 15px;
             }
         }
         @keyframes rotateMove {

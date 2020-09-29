@@ -16,13 +16,13 @@
                    closeable
                    close-icon="close"
         >
-            <h3>当前播放({{getMusicsLen}})</h3>
+            <h3 class="pop_title">当前播放({{getMusicsLen}})</h3>
             <div class="music-list">
                 <div v-for="(item,index) in Musics" :class='{active:index==currentIndex,"item-info":true}' :key="item.id">
                     <div class="list-left" @click="toPlay(index)">
-                        <span v-show="currentIndex==index" class="iconfont icon-yinlianglabashengyin-xianxing cur"></span>
-                        <span class="name">{{item.name}}</span>
-                        <span class="author">{{item.author}}</span>
+                            <span v-show="currentIndex==index" class="iconfont icon-yinlianglabashengyin-xianxing cur"></span>
+                            <span class="name">{{item.name}}</span>
+                            <span class="author">{{item.author}}</span>
                     </div>
                     <span class="iconfont icon-iconfontshanchu5 list-right" @click="delMusic(index)"></span>
                 </div>
@@ -35,7 +35,6 @@
         </transition>
         <main-play-bar @toPlay="goToPlay" @change="change" @ShowPopup="ShowPopup"
                        :cur-music="getCurMusic"
-
         >
         </main-play-bar>
     </div>
@@ -355,19 +354,23 @@
         overflow: hidden;
         /*background: #8cc5ff;*/
         .search {
-            height: 8vh;
+            height: 110px;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10;
             background: #8cc5ff;
+            font-size: 40px;
+            span {
+                font-size: 40px;
+            }
             a {
                 width: 80vw;
-                height: 6vh;
-                border-radius: 30px;
+                height: 80px;
+                border-radius: 36px;
                 display: block;
                 text-align: center;
-                line-height: 6vh;
+                line-height: 80px;
                 text-decoration: unset;
                 color: #252525;
                 background: #fff;
@@ -396,12 +399,12 @@
             margin: auto;
             left: 0;
             right: 0;
-            border-radius: 15px;
-            padding: 15px;
+            border-radius: 30px;
+            padding:20px 30px;
             box-sizing: border-box;
             overflow: hidden;
             .music-list {
-                height: 100%-10px;
+                height: 100%-13px;
                 overflow-y: auto;
                 &::-webkit-scrollbar-corner{
                     display: none;
@@ -417,17 +420,20 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    display: flex;
+                    align-items: center;
                     .cur {
-                        font-size: 18px;
-                        padding-right: 10px;
+                        font-size: 36px;
+                        padding-right: 20px;
                     }
                     .name{
-                        font-size: 16px;
-                        padding-right: 10px;
+                        font-size: 32px;
+                        padding-right: 20px;
                     }
                     .author {
-                        font-size: 12px;
+                        font-size: 24px;
                         color:#b3b0b0;
+                        margin-top: 2px;
                     }
                 }
                 .list-right {
@@ -435,6 +441,7 @@
                     text-align: right;
                     padding-right: 10px;
                     color:#b3b0b0;
+                    font-size: 30px;
                 }
                 &.active {
                     .list-left {
@@ -446,9 +453,14 @@
                 }
             }
 
+
+        }
+
+        .pop_title {
+                font-size: 40px;
         }
         .router {
-            width: 100vw;
+            /*width: 100vw;*/
             transition: all .5s cubic-bezier(.55,0,.1,1);
         }
         .slide-left-enter, .slide-right-leave-active {
@@ -462,5 +474,10 @@
             transform: translate(-30px, 0);
         }
     }
-
+    /deep/ .van-popup__close-icon {
+        font-size: 40px;
+    }
+    /deep/ .van-skeleton__row,/deep/ .van-skeleton__title {
+        height: 32px;
+    }
 </style>

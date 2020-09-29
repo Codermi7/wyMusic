@@ -7,6 +7,7 @@ import store from "./store";
 import {Popup} from "vant";
 import { Toast } from "vant";
 import { Skeleton } from 'vant';
+import 'amfe-flexible'
 
 Vue.use(Skeleton);
 
