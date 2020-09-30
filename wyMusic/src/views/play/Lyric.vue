@@ -1,7 +1,6 @@
 <template>
   <div class='lyric_box'>
     <div class="til">{{title}}<span>{{author}}</span></div>
-    <div style="height: 34vh">
       <div class="lyric">
         <div
                 class="lyric_list"
@@ -15,9 +14,6 @@
           >{{item[1]}}</p>
         </div>
       </div>
-    </div>
-
-
   </div>
 </template>
 <script>
@@ -103,17 +99,17 @@ export default {
 .lyric_box {
   color: #fff;
   position: relative;
-  font-size: 34px;
-  height: 42vh;
+  height: 44vh;
   overflow: hidden;
   text-align: center;
   .til {
-    height: 6vh;
+    height: 5vh;
     width: 60vw;
     display: inline-block;
     padding-top: 2vh;
     white-space: nowrap;
     overflow: hidden;
+    font-size: 34px;
     text-overflow: ellipsis;
     span {
       font-size: 28px;
@@ -121,7 +117,7 @@ export default {
     }
   }
   .lyric {
-    height: 100%;
+    height: 38vh;
     color: #b3b0b0;
     overflow: hidden;
   }
@@ -129,9 +125,10 @@ export default {
     /*transition: all 0.2s;*/
   }
   p {
-    padding: 16px;
+    padding: 10px 0;
     height: 50px;
     line-height: 50px;
+    font-size: 32px;
   }
   p.active {
     color: #fff;

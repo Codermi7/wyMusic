@@ -243,7 +243,7 @@
                 display: flex;
                 align-items: center;
                 padding: 15px 0;
-                font-size: 30px;
+                font-size: 34px;
                 .item-left {
                     flex: 2;
                     text-align: center;
@@ -259,7 +259,7 @@
                         text-overflow: ellipsis;
                     }
                     .item-author {
-                        font-size: 12px;
+                        font-size: 20px;
                         color:#b3b0b0;
                     }
                 }
@@ -267,6 +267,7 @@
                     flex: 2;
                     text-align: center;
                     color: #B5B5B5;
+                    font-size: 30px;
                 }
                 &:active {
                     background: #f2f2f2;

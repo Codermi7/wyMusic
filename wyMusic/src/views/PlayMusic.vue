@@ -42,13 +42,7 @@
     props:["curMusic"],
     components: {Record,Lyric,PlayBar,ProgressBar},
     created() {
-        let timer = setInterval(()=>{
-            if(this.$refs.audio){
-                let {duration} = this.$refs.audio
-                this.duration = duration
-                clearInterval(timer)
-            }
-        },500)
+        this.getDuration()
         this.listenPageClose()
     },
       mounted() {
@@ -99,8 +93,21 @@
           goBack() {
             this.$emit('close')
           },
+          //拼接播放地址
           joint(id){
               return 'https://music.163.com/song/media/outer/url?id='+id+'.mp3'
+          },
+          getDuration() {
+              let timer = setInterval(()=>{
+                  if(this.$refs.audio){
+                      let {duration} = this.$refs.audio
+                      if(duration){
+                          this.duration = duration
+                          clearInterval(timer)
+                      }
+
+                  }
+              },100)
           },
           listenPageClose() {
               window.addEventListener('pagehide',()=>{
@@ -110,6 +117,7 @@
           clearListen(){
               window.removeEventListener('pagehide',null)
           }
+
 
 
     },
@@ -140,7 +148,7 @@
       overflow: hidden;
       .gs_bg {
           z-index: -1;
-          filter: blur(70px);
+          filter: blur(90px);
           background-size: auto 100%;
           background-position: center center;
           background-repeat: no-repeat;

@@ -121,12 +121,12 @@
             border-radius: 30px;
         }
         /deep/.el-slider__runway {
-            height: 1px;
+            height: 2px;
             background: darkgray;
             /*margin: 2px 0;*/
         }
         /deep/.el-slider__bar {
-            height: 1px;
+            height: 2px;
             background: azure;
         }
         /deep/.el-slider__button-wrapper {
