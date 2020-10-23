@@ -11,6 +11,6 @@ module.exports = {
             replace: true,//
             // mediaQuery: false,//媒体查询( @media screen 之类的)中不生效
             minPixelValue: 6 //px小于6px时不替换为rem
-          }
+        }
     }
 }

@@ -126,7 +126,6 @@ export default {
   }
   p {
     padding: 10px 0;
-    height: 50px;
     line-height: 50px;
     font-size: 32px;
   }
