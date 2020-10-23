@@ -19,11 +19,11 @@ npm run serve
 ```
 
 #### 页面图片
-![img](https://github.com/Codermi7/wyMusic/tree/master/public/img1.png)
-![img](https://github.com/Codermi7/wyMusic/tree/master/public/img2.png)
-![img](https://github.com/Codermi7/wyMusic/tree/master/public/img3.png)
-![img](https://github.com/Codermi7/wyMusic/tree/master/public/img4.png)
-![img](https://github.com/Codermi7/wyMusic/tree/master/public/img5.png)
+![img](https://raw.githubusercontent.com/Codermi7/wyMusic/master/public/img1.png)
+![img](https://raw.githubusercontent.com/Codermi7/wyMusic/master/public/img2.png)
+![img](https://raw.githubusercontent.com/Codermi7/wyMusic/master/public/img3.png)
+![img](https://raw.githubusercontent.com/Codermi7/wyMusic/master/public/img4.png)
+![img](https://raw.githubusercontent.com/Codermi7/wyMusic/master/public/img5.png)
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
