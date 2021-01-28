@@ -10,7 +10,8 @@ module.exports = {
             // selectorBlackList: [],//选择器黑名单，即该名单中的px不被替换为rem
             replace: true,//
             // mediaQuery: false,//媒体查询( @media screen 之类的)中不生效
-            minPixelValue: 6 //px小于6px时不替换为rem
+            minPixelValue: 6, //px小于6px时不替换为rem
+            selectorBlackList: ['van']
         }
     }
 }

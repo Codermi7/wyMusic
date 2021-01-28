@@ -378,19 +378,19 @@
             }
         }
         .hidden {
-            opacity: 0;
             z-index: -1;
             position: absolute;
-            left: 0;
-            bottom: -999px;
+            left: -100vw;
+            top: 0;
             pointer-events: unset;
+            /*transition: all ease-in 0.4s;*/
         }
         .show {
-            opacity: 1;
             z-index: 999;
             position: absolute;
             top: 0;
             left: 0;
+            /*transition: left ease-in 0.4s;*/
         }
         .van-popup--bottom {
             position: absolute;
@@ -403,57 +403,62 @@
             padding:20px 30px;
             box-sizing: border-box;
             overflow: hidden;
-            .music-list {
-                height: 100%-13px;
-                overflow-y: auto;
-                &::-webkit-scrollbar-corner{
-                    display: none;
-                }
+
+
+
+        }
+        /deep/.van-popup__close-icon {
+            font-size: 30px;
+        }
+        .music-list {
+            height: 100%-13px;
+            overflow-y: auto;
+            &::-webkit-scrollbar-corner{
+                display: none;
             }
-            .item-info {
-                height: 5vh;
+        }
+        .item-info {
+            height: 5vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 36px;
+            .list-left {
+                flex: 7;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-                .list-left {
-                    flex: 7;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: flex;
-                    align-items: center;
-                    .cur {
-                        font-size: 36px;
-                        padding-right: 20px;
-                    }
-                    .name{
-                        font-size: 32px;
-                        padding-right: 20px;
-                    }
-                    .author {
-                        font-size: 24px;
-                        color:#b3b0b0;
-                        margin-top: 2px;
-                    }
+                .cur {
+                    font-size: 36px;
+                    padding-right: 20px;
                 }
-                .list-right {
-                    flex: 1;
-                    text-align: right;
-                    padding-right: 10px;
+                .name{
+                    font-size: 32px;
+                    padding-right: 20px;
+                }
+                .author {
+                    font-size: 24px;
                     color:#b3b0b0;
-                    font-size: 30px;
+                    margin-top: 2px;
                 }
-                &.active {
-                    .list-left {
+            }
+            .list-right {
+                flex: 1;
+                text-align: right;
+                padding-right: 10px;
+                color:#b3b0b0;
+                font-size: 30px;
+            }
+            &.active {
+                .list-left {
+                    color: red;
+                    .author {
                         color: red;
-                        .author {
-                            color: red;
-                        }
                     }
                 }
             }
-
-
         }
 
         .pop_title {
