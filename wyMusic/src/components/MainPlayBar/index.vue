@@ -1,5 +1,5 @@
 <template>
-    <div class="main-play" v-show="hideshow">
+    <div class="main-play">
         <div  v-if="curMusic!=undefined" class="left" @click="handleClick" >
             <img  :src="curMusic.img"
                  :class="{stop:$store.state.isStop}"
@@ -32,21 +32,7 @@
         props: ["curMusic"],
         data(){
             return {
-                docmHeight: document.documentElement.clientHeight ||document.body.clientHeight,
-                showHeight: document.documentElement.clientHeight ||document.body.clientHeight,
-                hideshow:true,  //显示或者隐藏footer
                 axtx:axtx
-            }
-        },
-        mounted() {
-            // let winHeight = $(window).height();
-            // $(window).resize(function() {
-            //     var thisHeight = $(this).height();
-            //     var keyboardHeight = thisHeight - winHeight;
-            //     $(".main-play").css({'bottom': keyboardHeight + 'px'});
-            // });
-            window.onresize = ()=>{
-                this.showHeight = document.documentElement.clientHeight || document.body.clientHeight;
             }
         },
         methods: {
@@ -58,18 +44,6 @@
             },
             showPopup() {
                 this.$emit('ShowPopup')
-            }
-        },
-        watch: {
-            //监听显示高度
-            showHeight:function() {
-                if(this.docmHeight > this.showHeight){
-                    //隐藏
-                    this.hideshow=false
-                }else{
-                    //显示
-                    this.hideshow=true
-                }
             }
         }
     }
@@ -87,6 +61,7 @@
         height: 8vh;
         padding: 0 20px;
         box-sizing: border-box;
+        background: #fff;
         .left {
             display: flex;
             flex: 6;

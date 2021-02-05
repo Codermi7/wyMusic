@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" id="viewportMeta" content="width=device-width,initial-scale=1.0;user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- <script>
@@ -19,4 +19,14 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    let initViewport = function(height){
+      let metaEl = document.querySelector("#viewportMeta");
+      let content = "height=" + height + ",width=device-width,initial-scale=1.0,user-scalable=no";
+      metaEl.setAttribute('name', 'viewport');
+      metaEl.setAttribute('content', content);
+    }
+    let realHeight = window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight
+    initViewport(realHeight);
+  </script>
 </html>

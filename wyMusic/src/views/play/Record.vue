@@ -1,5 +1,5 @@
 <template>
-  <div class='record_box'>
+  <div class='record_box' :class="{'stop':isStop}">
     <div
       class="record"
       :class='{stop:isStop}'
@@ -38,6 +38,11 @@ export default {
 .record_box {
   position: relative;
   height: 42vh;
+  &.stop {
+      &::before {
+          transform: rotate(-25deg);
+      }
+  }
   &::before {
     content: "";
     display: block;
@@ -49,6 +54,9 @@ export default {
     background-repeat: no-repeat;
     left: 45%;
     z-index: 100;
+    transform-origin: left top;
+    transform: rotate(0);
+    transition: all 0.3s linear;
   }
   .record {
     width: 60vw;

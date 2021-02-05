@@ -1,9 +1,11 @@
-// const baseURL = 'http://10.168.1.115:3000'
+const baseURL = 'http://musicapi.leanapp.cn'
 function http(url,data={},type='get'){
   let obj = {
     method:type,
   }
-  // url=baseURL+url;
+  if(process.env.NODE_ENV=='production'){
+    url=baseURL+url;
+  }
   if(/post/i.test(obj.method)){
     Object.assin(obj,{
       body:JSON.stringify(data)
